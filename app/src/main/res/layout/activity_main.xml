@@ -18,7 +18,14 @@
         <EditText
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:hint="내 여행 검색하기"/>
+            android:layout_margin="10dp"
+            android:paddingVertical="10dp"
+            android:paddingHorizontal="20dp"
+            android:textSize="20dp"
+            android:backgroundTint="#DDDDDD"
+            android:background="@drawable/buttno_all_round"
+            android:drawableRight="@drawable/baseline_search_34"
+            android:hint="@string/search_hint" />
 
     </LinearLayout>
 
@@ -30,17 +37,20 @@
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="여행 기록"/>
+            android:layout_weight="1"
+            android:text="@string/add_button"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="홈"/>
+            android:layout_weight="1"
+            android:text="@string/home_button"/>
 
         <Button
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:text="지도"/>
+            android:layout_weight="1"
+            android:text="@string/map_button"/>
 
 
 
