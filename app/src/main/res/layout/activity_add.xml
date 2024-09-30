@@ -94,4 +94,60 @@
 
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/pink_tab_round"
+        android:layout_weight="0.2">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/pink_tab_round"
+        android:layout_weight="1">
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_weight="0.305"
+        android:orientation="horizontal"
+        android:background="@color/light_gray">
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background=""
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:text="@string/add_button"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background=""
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:text="@string/home_button"/>
+
+        <Button
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background=""
+            android:textSize="20dp"
+            android:textColor="@color/black"
+            android:text="@string/map_button"/>
+
+
+
+    </LinearLayout>
+
 </LinearLayout>
