@@ -3,6 +3,7 @@
     <style name="Base.Theme.UnivAndroidProject" parent="Theme.Material3.DayNight.NoActionBar">
         <!-- Customize your light theme here. -->
         <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+        bottomNavigationView.itemIconTintList = null <!-- 이 코드가 없으면 하단 옵션바의 아이콘이 정상적으로 출력되지 않음 -->
     </style>
 
     <style name="Theme.UnivAndroidProject" parent="Base.Theme.UnivAndroidProject" />
