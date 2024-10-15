@@ -7,7 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.univandroidproject.databinding.ActivityMainBinding
+import com.example.univandroidproject.ui.view.CalanderFragment
 import com.example.univandroidproject.ui.view.HomeFragment
+import com.example.univandroidproject.ui.view.MapFragment
 import com.example.univandroidproject.ui.view.SearchFragment
 
 class MainActivity : AppCompatActivity() {
@@ -38,11 +40,11 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.fragment_favorite -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_container, HomeFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_container, CalanderFragment()).commit()
                     true
                 }
                 R.id.fragment_settings -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_container, SearchFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_container, MapFragment()).commit()
                     true
                 }
                 else -> false

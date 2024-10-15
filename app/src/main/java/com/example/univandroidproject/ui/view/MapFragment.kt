@@ -7,12 +7,10 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.example.univandroidproject.R
 
-class SearchFragment: Fragment() {
-
+class MapFragment : Fragment() {
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
-        return inflater.inflate(R.layout.fragment_search, container, false)
-        //fragment_home과 연결시켜 return해줌.
+        return inflater.inflate(R.layout.fragment_map, container, false)
+        //fragment_map과 연결시켜 return해줌.
     }
-
 }

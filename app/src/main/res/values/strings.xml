@@ -5,4 +5,5 @@
     <string name="home_button">캘린더</string>
     <string name="map_button">지도</string>
     <string name="complete_button">완료하기</string>
+    <string name="map_text">지도 화면</string>
 </resources>
