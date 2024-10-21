@@ -5,7 +5,7 @@
         android:title="홈"
         android:icon="@drawable/hero_home"/>
     <item
-        android:id="@+id/fragment_search"
+        android:id="@+id/fragment_calander"
         android:title="캘린더"
         android:icon="@drawable/hero_cal"/>
     <item
@@ -13,7 +13,7 @@
         android:title="즐겨찾기"
         android:icon="@drawable/hero_heart"/>
     <item
-        android:id="@+id/fragment_settings"
+        android:id="@+id/fragment_map"
         android:title="지도"
         android:icon="@drawable/hero_map"/>
 </menu>

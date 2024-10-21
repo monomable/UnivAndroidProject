@@ -1,6 +1,7 @@
 package com.example.univandroidproject
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
@@ -8,11 +9,13 @@ import androidx.core.view.ViewCompat
 import androidx.core.view.WindowInsetsCompat
 import com.example.univandroidproject.databinding.ActivityMainBinding
 import com.example.univandroidproject.ui.view.CalanderFragment
+import com.example.univandroidproject.ui.view.FavoriteFragment
 import com.example.univandroidproject.ui.view.HomeFragment
 import com.example.univandroidproject.ui.view.MapFragment
 import com.example.univandroidproject.ui.view.SearchFragment
 
 class MainActivity : AppCompatActivity() {
+
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
@@ -35,15 +38,15 @@ class MainActivity : AppCompatActivity() {
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, HomeFragment()).commit()
                     true
                 }
-                R.id.fragment_search -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_container, SearchFragment()).commit()
-                    true
-                }
-                R.id.fragment_favorite -> {
+                R.id.fragment_calander -> {
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, CalanderFragment()).commit()
                     true
                 }
-                R.id.fragment_settings -> {
+                R.id.fragment_favorite -> {
+                    supportFragmentManager.beginTransaction().replace(R.id.main_container, FavoriteFragment()).commit()
+                    true
+                }
+                R.id.fragment_map -> {
                     supportFragmentManager.beginTransaction().replace(R.id.main_container, MapFragment()).commit()
                     true
                 }
