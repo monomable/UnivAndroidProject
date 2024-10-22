@@ -39,8 +39,8 @@ class HomeFragment: Fragment(), View.OnClickListener {
 
                 //fragment 내부 간의 이동
                 requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_container, AddFragment()).commit()
-                true
-                //val intent = Intent(activity, AddActivity::class.java)
+                true // 뒤로가기가 안됨..
+                //val intent = Intent(getActivity(), AddActivity::class.java)
                 //startActivity(intent)
             }
 
