@@ -38,10 +38,12 @@ class HomeFragment: Fragment(), View.OnClickListener {
                 //Toast.makeText(activity, "버튼 눌림", Toast.LENGTH_SHORT).show()
 
                 //fragment 내부 간의 이동
-                requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_container, AddFragment()).commit()
-                true // 뒤로가기가 안됨..
+                //requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_container, AddFragment()).commit()
+                //true // 뒤로가기가 안됨..
                 //val intent = Intent(getActivity(), AddActivity::class.java)
                 //startActivity(intent)
+                val intent = Intent (getActivity(), AddActivity::class.java)
+                getActivity()?.startActivity(intent)
             }
 
             else -> {

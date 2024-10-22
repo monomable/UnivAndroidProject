@@ -24,8 +24,8 @@ class MapFragment : Fragment() {
 
         val mvbutton: Button = view.findViewById<Button>(R.id.NewButton)
         mvbutton.setOnClickListener{
-            val intent = Intent (getActivity(), AddActivity::class.java)
-            getActivity()?.startActivity(intent)
+            //val intent = Intent (getActivity(), AddActivity::class.java)
+            //getActivity()?.startActivity(intent)
         }
     }
 }
