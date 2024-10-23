@@ -35,7 +35,7 @@
             android:background="@drawable/outline_add_24"
             android:text="@string/add_button"/>
 
-    </LinearLayout> -->
+    </LinearLayout>
 
     <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
@@ -43,7 +43,13 @@
         android:layout_weight="1"
         android:scrollbarFadeDuration="0"
         android:scrollbarSize="5dp"
-        android:scrollbarThumbVertical="@color/light_gray" />
+        android:scrollbarThumbVertical="@color/light_gray" /> -->
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="리사이클러뷰 탑제 예정"
+        android:textSize="40sp"/>
 
 
 

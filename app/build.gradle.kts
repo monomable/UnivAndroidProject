@@ -34,6 +34,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    viewBinding{
+        enable
+    }
 
     buildFeatures {
         viewBinding = true
@@ -54,6 +57,7 @@ dependencies {
 
     implementation(libs.play.services.maps)
     implementation(libs.play.services.location)
+    implementation(libs.androidx.recyclerview)
 }
 
 secrets {

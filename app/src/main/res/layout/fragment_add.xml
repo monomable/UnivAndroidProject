@@ -14,16 +14,17 @@
         android:layout_margin="10dp"
         android:text="@string/complete_button" />
 
-    <EditText
+    <android.widget.Button
+        android:id="@+id/dayPicker_Button"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_marginHorizontal="30dp"
-        android:hint="날짜 입력하기"
-        android:padding="5dp"
-        android:textAlignment="center"
         android:background="@drawable/pink_tab_round"
         android:backgroundTint="#ffa6a6"
-        />
+        android:hint="날짜 입력"
+        android:textSize="20sp"
+        android:padding="5dp"
+        android:textAlignment="center" />
 
     <LinearLayout
         android:layout_width="match_parent"
