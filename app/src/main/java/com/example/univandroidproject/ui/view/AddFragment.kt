@@ -50,7 +50,7 @@ class AddFragment : Fragment(){
         val file_img = view.findViewById<ImageView>(R.id.imageView)
 
         file_img.setOnClickListener {
-            Toast.makeText(AddActivity(), "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
+            //Toast.makeText(AddActivity(), "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
             readImage.launch("image/*")
 
         }

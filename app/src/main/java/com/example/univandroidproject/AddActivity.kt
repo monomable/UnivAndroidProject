@@ -1,12 +1,14 @@
 package com.example.univandroidproject
 
 import android.Manifest
+import android.app.DatePickerDialog
 import android.os.Bundle
 import android.widget.Button
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import com.example.univandroidproject.ui.view.DatePickerFragment
 
 class AddActivity : AppCompatActivity() {
 
@@ -64,7 +66,12 @@ class AddActivity : AppCompatActivity() {
 
         daypickbutton = findViewById<Button>(R.id.dayPicker_Button)
         daypickbutton.setOnClickListener{
-            Toast.makeText(this, "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
+            val newFragment = DatePickerFragment()
+            newFragment.show(supportFragmentManager, "datePicker")
+
+            //daypickbutton.text = "$year/${month+1}/$dayOfMonth"
+
+            //Toast.makeText(this, "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
         }
 
     }
