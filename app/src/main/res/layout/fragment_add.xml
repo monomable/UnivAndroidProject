@@ -14,24 +14,52 @@
         android:layout_margin="10dp"
         android:text="@string/complete_button" />
 
-    <android.widget.Button
-        android:id="@+id/dayPicker_Button"
+    <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_marginHorizontal="30dp"
-        android:background="@drawable/pink_tab_round"
-        android:backgroundTint="#ffa6a6"
-        android:hint="날짜 입력"
-        android:textSize="20sp"
-        android:padding="5dp"
-        android:textAlignment="center" />
+        android:orientation="horizontal"
+        android:gravity="center">
+
+        <android.widget.Button
+            android:id="@+id/startday_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+
+            android:background="@drawable/pink_tab_round"
+            android:backgroundTint="#ffa6a6"
+            android:hint="날짜 입력"
+            android:textSize="20sp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~"
+            android:paddingHorizontal="10dp"
+            android:textSize="30sp"/>
+
+        <android.widget.Button
+            android:id="@+id/endday_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@drawable/pink_tab_round"
+            android:backgroundTint="#ffa6a6"
+            android:hint="날짜 입력"
+            android:textSize="20sp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:textAlignment="center" />
+
+    </LinearLayout>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:background="@drawable/pink_tab_round">
+        android:background="@drawable/green_tab_round">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -45,12 +73,7 @@
                 android:padding="10dp"
                 android:layout_marginLeft="10dp"
                 android:layout_gravity="left"
-                android:text="날짜"/>
-
-            <View
-                android:layout_width="0dp"
-                android:layout_height="0dp"
-                android:layout_weight="1"/>
+                android:text="제목"/>
 
             <TextView
                 android:layout_width="wrap_content"
@@ -58,8 +81,7 @@
                 android:textSize="30dp"
                 android:padding="10dp"
                 android:layout_marginRight="10dp"
-                android:layout_gravity="right"
-                android:text="제목"/>
+                android:hint="제목을 입력해주세요"/>
 
         </LinearLayout>
 
@@ -99,7 +121,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/pink_tab_round"
+        android:background="@drawable/green_tab_round"
         android:layout_weight="0.2">
 
     </LinearLayout>
@@ -108,7 +130,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/pink_tab_round"
+        android:background="@drawable/green_tab_round"
         android:layout_weight="1">
 
     </LinearLayout>
