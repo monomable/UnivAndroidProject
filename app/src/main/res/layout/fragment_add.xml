@@ -24,13 +24,12 @@
             android:id="@+id/startday_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-
-            android:background="@drawable/pink_tab_round"
-            android:backgroundTint="#ffa6a6"
+            android:background="@drawable/blue_round_line"
             android:hint="날짜 입력"
             android:textSize="20sp"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp"
+
             android:textAlignment="center" />
 
         <TextView
@@ -44,8 +43,7 @@
             android:id="@+id/endday_Button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/pink_tab_round"
-            android:backgroundTint="#ffa6a6"
+            android:background="@drawable/blue_round_line"
             android:hint="날짜 입력"
             android:textSize="20sp"
             android:paddingHorizontal="30dp"
@@ -59,7 +57,7 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:orientation="vertical"
-        android:background="@drawable/green_tab_round">
+        android:background="@drawable/blue_tab_round">
 
         <LinearLayout
             android:layout_width="match_parent"
@@ -121,7 +119,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/green_tab_round"
+        android:background="@drawable/blue_tab_round"
         android:layout_weight="0.2">
 
     </LinearLayout>
@@ -130,8 +128,8 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
-        android:background="@drawable/green_tab_round"
-        android:layout_weight="1">
+        android:layout_weight="1"
+        android:background="@drawable/blue_tab_round">
 
     </LinearLayout>
 
