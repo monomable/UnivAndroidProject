@@ -64,8 +64,9 @@ class AddActivity : AppCompatActivity() {
 
 
 
-        daypickbutton = findViewById<Button>(R.id.dayPicker_Button)
+        daypickbutton = findViewById<Button>(R.id.startday_Button)
         daypickbutton.setOnClickListener{
+
             val newFragment = DatePickerFragment()
             newFragment.show(supportFragmentManager, "datePicker")
 

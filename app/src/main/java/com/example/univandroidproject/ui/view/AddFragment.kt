@@ -55,7 +55,7 @@ class AddFragment : Fragment(){
 
         }
 
-        val daypickbutton: Button = view.findViewById<Button>(R.id.dayPicker_Button)
+        val daypickbutton: Button = view.findViewById<Button>(R.id.startday_Button)
         daypickbutton.setOnClickListener{
             Toast.makeText(AddActivity(), "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
         }

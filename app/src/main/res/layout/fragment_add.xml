@@ -122,6 +122,15 @@
         android:background="@drawable/blue_tab_round"
         android:layout_weight="0.2">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="left"
+            android:text="태그"/>
+
     </LinearLayout>
 
     <LinearLayout
@@ -130,6 +139,14 @@
         android:layout_margin="10dp"
         android:layout_weight="1"
         android:background="@drawable/blue_tab_round">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="내용을 입력해주세요"/>
 
     </LinearLayout>
 
