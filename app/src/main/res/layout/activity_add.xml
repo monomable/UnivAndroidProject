@@ -30,7 +30,6 @@
             android:textSize="20sp"
             android:paddingHorizontal="30dp"
             android:paddingVertical="5dp"
-
             android:textAlignment="center" />
 
         <TextView
@@ -74,7 +73,7 @@
                 android:layout_gravity="left"
                 android:text="제목"/>
 
-            <TextView
+            <EditText
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24dp"
@@ -130,7 +129,7 @@
         android:layout_weight="1"
         android:background="@drawable/blue_tab_round">
 
-        <TextView
+        <EditText
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp"

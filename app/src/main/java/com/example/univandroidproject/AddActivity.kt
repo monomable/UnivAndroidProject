@@ -18,7 +18,8 @@ import com.example.univandroidproject.ui.view.DatePickerFragment
 
 class AddActivity : AppCompatActivity() {
 
-    lateinit var daypickbutton : Button
+    lateinit var startDaybutton : Button
+    lateinit var endDaybutton : Button
     lateinit var file_img : ImageView
     lateinit var file_img2 : ImageView
     lateinit var file_img3 : ImageView
@@ -55,7 +56,7 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
-        init()
+        recyclerInit()
 
         checkPermission.launch(permissionList)
 
@@ -78,25 +79,29 @@ class AddActivity : AppCompatActivity() {
 
 
 
-        daypickbutton = findViewById<Button>(R.id.startday_Button)
-        daypickbutton.setOnClickListener{
+        startDaybutton = findViewById<Button>(R.id.startday_Button)
+        endDaybutton = findViewById<Button>(R.id.endday_Button)
+
+        startDaybutton.setOnClickListener{
 
             val newFragment = DatePickerFragment()
             newFragment.show(supportFragmentManager, "datePicker")
 
             //daypickbutton.text = "$year/${month+1}/$dayOfMonth"
-
             //Toast.makeText(this, "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
+        }
+
+        endDaybutton.setOnClickListener{
+            val newFragment = DatePickerFragment()
+            newFragment.show(supportFragmentManager, "datePicker")
         }
 
     }
 
-    private fun init() {
+    private fun recyclerInit() {
         recyclerView = findViewById(R.id.img_board)
         recyclerView.setHasFixedSize(true)
         recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-
-
 
         ImgList = ArrayList()
 
@@ -104,6 +109,8 @@ class AddActivity : AppCompatActivity() {
 
         imgAdapter = AddImgAdapter(ImgList)
         recyclerView.adapter = imgAdapter
+
+
     }
 
     private fun addDataToList() {
