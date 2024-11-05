@@ -1,7 +1,6 @@
 package com.example.univandroidproject.ui.view
 
 import android.Manifest
-import android.app.DatePickerDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -13,9 +12,6 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import com.example.univandroidproject.AddActivity
 import com.example.univandroidproject.R
-import com.example.univandroidproject.MainActivity
-import com.google.android.gms.maps.MapView
-import java.util.Calendar
 
 class AddFragment : Fragment(){
 
@@ -38,7 +34,7 @@ class AddFragment : Fragment(){
 
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        return inflater.inflate(R.layout.fragment_add, container, false)
+        return inflater.inflate(R.layout.activity_add, container, false)
         //fragment_add과 연결시켜 return해줌.
     }
 
@@ -47,13 +43,13 @@ class AddFragment : Fragment(){
 
         checkPermission.launch(permissionList)
 
-        val file_img = view.findViewById<ImageView>(R.id.imageView)
+        //val file_img = view.findViewById<ImageView>(R.id.imageView)
 
-        file_img.setOnClickListener {
+        //file_img.setOnClickListener {
             //Toast.makeText(AddActivity(), "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
-            readImage.launch("image/*")
+        //    readImage.launch("image/*")
 
-        }
+        //}
 
         val daypickbutton: Button = view.findViewById<Button>(R.id.startday_Button)
         daypickbutton.setOnClickListener{

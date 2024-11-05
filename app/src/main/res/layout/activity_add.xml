@@ -4,7 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    tools:context=".AddActivity">
 
     <Button
         android:id="@+id/button"
@@ -76,42 +77,31 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:textSize="30dp"
+                android:textSize="24dp"
                 android:padding="10dp"
                 android:layout_marginRight="10dp"
+                android:layout_gravity="center"
                 android:hint="제목을 입력해주세요"/>
 
         </LinearLayout>
 
-        <LinearLayout
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/img_board"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal">
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            <!--tools:listitem="@layout/img_item_horizontal"-->
 
-            <ImageView
+            <!--<ImageView
                 android:id="@+id/imageView"
                 android:layout_width="150dp"
                 android:layout_height="150dp"
                 app:srcCompat="@android:drawable/ic_input_add"
                 tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
+                tools:layout_editor_absoluteY="16dp" /> -->
 
-            <ImageView
-                android:id="@+id/imageView2"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:srcCompat="@android:drawable/ic_input_add"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
-            <ImageView
-                android:id="@+id/imageView3"
-                android:layout_width="150dp"
-                android:layout_height="150dp"
-                app:srcCompat="@android:drawable/ic_input_add"
-                tools:layout_editor_absoluteX="16dp"
-                tools:layout_editor_absoluteY="16dp" />
 
-        </LinearLayout>
+        </androidx.recyclerview.widget.RecyclerView>
 
     </LinearLayout>
 
