@@ -42,14 +42,6 @@ class AddActivity : AppCompatActivity() {
     /*
     private val readImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         file_img.setImageURI(uri)
-    }
-
-    private val readImage2 = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        file_img2.setImageURI(uri)
-    }
-
-    private val readImage3 = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        file_img3.setImageURI(uri)
     }*/
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -61,20 +53,10 @@ class AddActivity : AppCompatActivity() {
         checkPermission.launch(permissionList)
 
 
-        /*file_img = findViewById<ImageView>(R.id.imageView)
-        file_img2 = findViewById<ImageView>(R.id.imageView2)
-        file_img3 = findViewById<ImageView>(R.id.imageView3)*/
+        //file_img = findViewById<ImageView>(R.id.imageView)
 
         //file_img.setOnClickListener {
         //    readImage.launch("image/*")
-        //}
-
-        //file_img2.setOnClickListener {
-        //    readImage2.launch("image/*")
-        //}
-
-        //file_img3.setOnClickListener {
-        //    readImage3.launch("image/*")
         //}
 
 
@@ -87,6 +69,7 @@ class AddActivity : AppCompatActivity() {
             val newFragment = DatePickerFragment()
             newFragment.show(supportFragmentManager, "datePicker")
 
+            //startDaybutton.text = newFragment.getText()
             //daypickbutton.text = "$year/${month+1}/$dayOfMonth"
             //Toast.makeText(this, "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
         }
