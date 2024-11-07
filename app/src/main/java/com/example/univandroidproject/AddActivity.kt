@@ -48,7 +48,7 @@ class AddActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_add)
 
-        recyclerInit()
+        recyclerInit() //리사이클러 뷰 생성 코드
 
         checkPermission.launch(permissionList)
 
@@ -70,7 +70,7 @@ class AddActivity : AppCompatActivity() {
             newFragment.show(supportFragmentManager, "datePicker")
 
             //startDaybutton.text = newFragment.getText()
-            //daypickbutton.text = "$year/${month+1}/$dayOfMonth"
+            //daypickbutton.setText = "$year/${month+1}/$dayOfMonth"
             //Toast.makeText(this, "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
         }
 
