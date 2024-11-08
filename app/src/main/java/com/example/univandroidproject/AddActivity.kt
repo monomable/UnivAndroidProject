@@ -3,9 +3,11 @@ package com.example.univandroidproject
 import AddImgAdapter
 import android.Manifest
 import android.app.DatePickerDialog
+import android.icu.util.Calendar
 import android.media.Image
 import android.os.Bundle
 import android.widget.Button
+import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
@@ -15,6 +17,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.databinding.ActivityAddBinding
 import com.example.univandroidproject.ui.Recycler.ImgItem
 import com.example.univandroidproject.ui.view.DatePickerFragment
+import java.text.SimpleDateFormat
+import java.util.Locale
 
 class AddActivity : AppCompatActivity() {
 
@@ -27,6 +31,8 @@ class AddActivity : AppCompatActivity() {
     lateinit var recyclerView: RecyclerView
     lateinit var ImgList:ArrayList<ImgItem>
     lateinit var imgAdapter: AddImgAdapter
+
+    private val calendar = Calendar.getInstance()
 
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
     private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -66,8 +72,7 @@ class AddActivity : AppCompatActivity() {
 
         startDaybutton.setOnClickListener{
 
-            val newFragment = DatePickerFragment()
-            newFragment.show(supportFragmentManager, "datePicker")
+            showDatePicker(startDaybutton)
 
             //startDaybutton.text = newFragment.getText()
             //daypickbutton.setText = "$year/${month+1}/$dayOfMonth"
@@ -75,8 +80,10 @@ class AddActivity : AppCompatActivity() {
         }
 
         endDaybutton.setOnClickListener{
+            /*
             val newFragment = DatePickerFragment()
-            newFragment.show(supportFragmentManager, "datePicker")
+            newFragment.show(supportFragmentManager, "datePicker")*/
+            showDatePicker(endDaybutton)
         }
 
     }
@@ -94,6 +101,21 @@ class AddActivity : AppCompatActivity() {
         recyclerView.adapter = imgAdapter
 
 
+    }
+
+    private fun showDatePicker(button: Button) {
+        val datePickerDialog = DatePickerDialog(this, {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, monthOfYear, dayOfMonth)
+            val dateFormat = SimpleDateFormat("yy/MM/dd", Locale.getDefault())
+            val foramattedDate = dateFormat.format(selectedDate.time)
+            button.text = foramattedDate
+        },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 
     private fun addDataToList() {

@@ -1,3 +1,4 @@
+
 package com.example.univandroidproject.ui.view
 
 import android.app.DatePickerDialog
@@ -8,7 +9,7 @@ import androidx.fragment.app.DialogFragment
 import java.util.Calendar
 
 class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener {
-
+    /* 사용 안함
     override fun onCreateDialog(savedInstanceState: Bundle?): Dialog {
         // Use the current date as the default date in the picker.
         val c = Calendar.getInstance()
@@ -20,7 +21,7 @@ class DatePickerFragment : DialogFragment(), DatePickerDialog.OnDateSetListener 
         return DatePickerDialog(requireContext(), this, year, month, day)
 
     }
-
+    */
     override fun onDateSet(view: DatePicker, year: Int, month: Int, day: Int) {
         // Do something with the date the user picks.
     }
