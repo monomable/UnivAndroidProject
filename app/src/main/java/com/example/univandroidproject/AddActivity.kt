@@ -1,23 +1,18 @@
 package com.example.univandroidproject
 
-import AddImgAdapter
+import AddTripAdapter
 import android.Manifest
 import android.app.DatePickerDialog
-import android.content.Intent
 import android.icu.util.Calendar
-import android.media.Image
 import android.os.Bundle
 import android.widget.Button
-import android.widget.DatePicker
 import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.univandroidproject.databinding.ActivityAddBinding
-import com.example.univandroidproject.ui.Recycler.ImgItem
-import com.example.univandroidproject.ui.view.DatePickerFragment
+import com.example.univandroidproject.ui.Recycler.TripItem
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -30,8 +25,8 @@ class AddActivity : AppCompatActivity() {
     lateinit var file_img3 : ImageView
 
     lateinit var recyclerView: RecyclerView
-    lateinit var ImgList:ArrayList<ImgItem>
-    lateinit var imgAdapter: AddImgAdapter
+    lateinit var ImgList:ArrayList<TripItem>
+    lateinit var imgAdapter: AddTripAdapter
 
     private val calendar = Calendar.getInstance()
 
@@ -98,7 +93,7 @@ class AddActivity : AppCompatActivity() {
 
         addDataToList()
 
-        imgAdapter = AddImgAdapter(ImgList)
+        imgAdapter = AddTripAdapter(ImgList)
         recyclerView.adapter = imgAdapter
 
 
@@ -119,15 +114,14 @@ class AddActivity : AppCompatActivity() {
         datePickerDialog.show()
     }
 
-    private fun addDataToList() {
-        ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
 
 
-        //imgAdapter.onItemClick = {        }
+    private fun addDataToList() {  // 리사이클러뷰 데이터 추가
+        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
+        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
+        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
+        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
+        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
+        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
     }
 }

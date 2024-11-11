@@ -6,13 +6,13 @@ import androidx.room.OnConflictStrategy
 import androidx.room.Query
 
 @Dao
-interface TravelDao {
+interface TripDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    suspend fun insert(vararg travelEntity: TravelEntity)
+    suspend fun insert(vararg travelEntity: Trip)
 
-    @Query("SELECT * FROM TravelEntity")
-    suspend fun getAll(): List<TravelEntity>
+    @Query("SELECT * FROM Trip")
+    suspend fun getAll(): List<Trip>
 
-    @Query("DELETE FROM TravelEntity")
+    @Query("DELETE FROM Trip")
     suspend fun deleteAll()
 }

@@ -1,5 +1,5 @@
 package com.example.univandroidproject.ui.Recycler
 
-data class ImgItem(
+data class TripItem(
     val travelImage: Int, val imgText: String
 )

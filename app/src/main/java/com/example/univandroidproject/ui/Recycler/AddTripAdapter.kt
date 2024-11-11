@@ -3,16 +3,14 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
-import com.example.univandroidproject.AddActivity
 import com.example.univandroidproject.R
-import com.example.univandroidproject.ui.Recycler.ImgItem
+import com.example.univandroidproject.ui.Recycler.TripItem
 
-class AddImgAdapter(private val ImgList : List<ImgItem>) :
-    RecyclerView.Adapter<AddImgAdapter.ImgViewHolder>() {
+class AddTripAdapter(private val ImgList : List<TripItem>) :
+    RecyclerView.Adapter<AddTripAdapter.ImgViewHolder>() {
 
-    var onItemClick: ((ImgItem) -> Unit)? = null
+    var onItemClick: ((TripItem) -> Unit)? = null
 
     class ImgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
         val ImgView : ImageView = itemView.findViewById(R.id.imageView)
