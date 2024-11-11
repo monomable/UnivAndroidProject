@@ -64,6 +64,8 @@ dependencies {
     annotationProcessor(libs.androidx.room.compiler)
     implementation(libs.androidx.room.ktx)
     kapt("androidx.room:room-compiler:2.6.1")
+
+    implementation (libs.androidx.lifecycle.viewmodel.ktx)
 }
 
 secrets {
