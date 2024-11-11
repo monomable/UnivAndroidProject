@@ -3,6 +3,7 @@ package com.example.univandroidproject
 import AddImgAdapter
 import android.Manifest
 import android.app.DatePickerDialog
+import android.content.Intent
 import android.icu.util.Calendar
 import android.media.Image
 import android.os.Bundle
@@ -125,5 +126,8 @@ class AddActivity : AppCompatActivity() {
         ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
         ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
         ImgList.add(ImgItem(R.drawable.outline_add_24, "추가"))
+
+
+        //imgAdapter.onItemClick = {        }
     }
 }
