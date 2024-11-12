@@ -1,64 +1,40 @@
 package com.example.univandroidproject
 
-import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.univandroidproject.databinding.ActivityMainBinding
-import com.example.univandroidproject.databinding.ActivitySaveBinding
-import com.example.univandroidproject.db.TripAddDatabase
-import com.example.univandroidproject.db.Trip
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
+import android.os.Bundle
+import android.widget.Toast
+import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+
 
 class SaveActivity : AppCompatActivity() {
-
-    private lateinit var binding : ActivitySaveBinding
-    private lateinit var database: TripAddDatabase
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivitySaveBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+        setContentView(R.layout.activity_save)
 
-        database = TripAddDatabase.getDatabase(this)
 
-        binding.saveButton.setOnClickListener {
-            val text = binding.edit.text.toString()
-            if (text.isNotEmpty()) {
-                saveText(text)
-            }
+        fillRecyclerview(1)
+
+        // 뷰 바인딩으로 연결해야함, 원본은 kotlin-android-extensions 으로 참조했음
+        btnGrid.setOnClickListener{
+            fillRecyclerview(2)
+        }
+        btnLinear.setOnClickListener{
+            fillRecyclerview(1)
         }
 
-        binding.getButon.setOnClickListener {
-            loadTexts()
-        }
 
-        binding.deleteButton.setOnClickListener {
-            deleteTexts()
-        }
     }
+    private fun fillRecyclerview(recyclerviewType:Int){
 
-    private fun saveText(text:String){
-        CoroutineScope(Dispatchers.IO).launch {
-            database.travelDao().insert(Trip(title = text, contents = "contents", end_day = 0, start_day = 0))
-            binding.edit.text = null
-        }
-    }
+        recyclerview.layoutManager = LinearLayoutManager(this)
 
-    private fun loadTexts() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val texts = database.travelDao().getAll().joinToString("\n") { it.title }
-            withContext(Dispatchers.Main) {
-                binding.view.text = texts
-            }
+        if(recyclerviewType==2){
+            recyclerview.layoutManager = GridLayoutManager(this,2)
         }
-    }
+        recyclerview.adapter = CountryAdapter(this,DataSource.countries,recyclerviewType){
+                country ->  Toast.makeText(this,"Population : ${country.population}", Toast.LENGTH_SHORT).show()
+        }
 
-    private fun deleteTexts(){
-        CoroutineScope(Dispatchers.IO).launch {
-            database.travelDao().deleteAll()
-            loadTexts()
-        }
     }
 }

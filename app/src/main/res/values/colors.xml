@@ -7,5 +7,6 @@
     <color name="soft_blue">#cce5ff</color>
     <color name="light_green">#f7fff8</color>
     <color name="light_gray">#DDDDDD</color>
+    <color name="dark_gray">#777777</color>
 </resources>
 

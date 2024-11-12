@@ -9,5 +9,7 @@ data class Trip(
     val title: String,
     val contents: String,
     val start_day: Int,
-    val end_day: Int
+    val end_day: Int,
+    val thumbnail: Int,
+    val images: Int
 )
