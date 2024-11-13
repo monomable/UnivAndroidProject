@@ -8,7 +8,6 @@ import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
 import com.example.univandroidproject.db.Trip
-import com.example.univandroidproject.ui.Recycler.TripItem
 
 class AddTripAdapter(var context: Context, var list:List<Trip>, var recyclerVeiwLayoutType : Int, val itemClickListener:(Trip)->Unit) : RecyclerView.Adapter<AddTripAdapter.Holder>() {
     inner class Holder(itemView: View,val itemClickListener:(Trip)->Unit) : RecyclerView.ViewHolder(itemView){
@@ -48,12 +47,6 @@ class AddTripAdapter(var context: Context, var list:List<Trip>, var recyclerVeiw
 
     override fun getItemCount(): Int {
         return list.size
-    }
-
-    @SuppressLint("NotifyDataSetChanged")
-    fun setData(trip: List<Trip>){
-        list = trip
-        notifyDataSetChanged()
     }
 
 }

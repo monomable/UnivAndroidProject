@@ -12,7 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.univandroidproject.ui.Recycler.TripItem
+import com.example.univandroidproject.db.Trip
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -25,7 +25,7 @@ class AddActivity : AppCompatActivity() {
     lateinit var file_img3 : ImageView
 
     lateinit var recyclerView: RecyclerView
-    lateinit var ImgList:ArrayList<TripItem>
+    lateinit var ImgList:ArrayList<Trip>
     lateinit var imgAdapter: AddTripAdapter
 
     private val calendar = Calendar.getInstance()
@@ -91,7 +91,7 @@ class AddActivity : AppCompatActivity() {
 
         ImgList = ArrayList()
 
-        addDataToList()
+        //addDataToList()
 
         //imgAdapter = AddTripAdapter(ImgList)
         recyclerView.adapter = imgAdapter
@@ -113,9 +113,7 @@ class AddActivity : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
-
-
-
+    /*
     private fun addDataToList() {  // 리사이클러뷰 데이터 추가
         ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
         ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
@@ -123,5 +121,5 @@ class AddActivity : AppCompatActivity() {
         ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
         ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
         ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
-    }
+    }*/
 }
