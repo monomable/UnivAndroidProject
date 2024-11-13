@@ -1,3 +1,4 @@
+import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -48,4 +49,11 @@ class AddTripAdapter(var context: Context, var list:List<Trip>, var recyclerVeiw
     override fun getItemCount(): Int {
         return list.size
     }
+
+    @SuppressLint("NotifyDataSetChanged")
+    fun setData(trip: List<Trip>){
+        list = trip
+        notifyDataSetChanged()
+    }
+
 }

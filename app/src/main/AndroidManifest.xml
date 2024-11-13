@@ -20,7 +20,7 @@
             android:value="${MAPS_API_KEY}"/>
 
         <activity
-            android:name=".MainActivity"
+            android:name=".SaveActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />

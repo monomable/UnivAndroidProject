@@ -93,7 +93,7 @@ class AddActivity : AppCompatActivity() {
 
         addDataToList()
 
-        imgAdapter = AddTripAdapter(ImgList)
+        //imgAdapter = AddTripAdapter(ImgList)
         recyclerView.adapter = imgAdapter
 
 

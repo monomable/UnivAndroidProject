@@ -7,7 +7,7 @@ import androidx.room.RoomDatabase
 
 @Database(entities = [Trip::class], version = 1, exportSchema = false)
 abstract class TripAddDatabase :RoomDatabase(){
-    abstract fun travelDao(): TripDao
+    abstract fun tripDao(): TripDao
 
     companion object {
         @Volatile

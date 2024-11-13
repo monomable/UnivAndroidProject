@@ -8,12 +8,16 @@ import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.univandroidproject.databinding.ActivitySaveBinding
 import com.example.univandroidproject.db.Trip
+import com.example.univandroidproject.db.TripAddDatabase
+import com.example.univandroidproject.db.TripDao
 import javax.sql.DataSource
 
 
 class SaveActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySaveBinding
+    private lateinit var tripList: List<Trip>
+    private lateinit var tripAddDatabase: TripAddDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -21,6 +25,8 @@ class SaveActivity : AppCompatActivity() {
         binding = ActivitySaveBinding.inflate(layoutInflater)
         val view = binding.root
         setContentView(view)
+
+        tripAddDatabase = TripAddDatabase.getDatabase(this)!!
 
 
         fillRecyclerview(1)
@@ -42,7 +48,8 @@ class SaveActivity : AppCompatActivity() {
         if(recyclerviewType==2){
             binding.recyclerview.layoutManager = GridLayoutManager(this,2)
         }
-        binding.recyclerview.adapter = AddTripAdapter(this, DataSource.Trip,recyclerviewType){
+        tripList = tripAddDatabase.tripDao().getAll()
+        binding.recyclerview.adapter = AddTripAdapter(this, tripList,recyclerviewType){
                 trip ->  Toast.makeText(this,"Title : ${trip.title}", Toast.LENGTH_SHORT).show()
         }
 

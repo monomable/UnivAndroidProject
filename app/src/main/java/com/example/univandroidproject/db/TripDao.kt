@@ -11,7 +11,7 @@ interface TripDao {
     suspend fun insert(vararg travelEntity: Trip)
 
     @Query("SELECT * FROM Trip")
-    suspend fun getAll(): List<Trip>
+    fun getAll(): List<Trip>
 
     @Query("DELETE FROM Trip")
     suspend fun deleteAll()
