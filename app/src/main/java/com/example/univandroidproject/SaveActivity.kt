@@ -3,21 +3,18 @@ package com.example.univandroidproject
 import AddTripAdapter
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
 import android.widget.Toast
 import androidx.recyclerview.widget.GridLayoutManager
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.univandroidproject.databinding.ActivitySaveBinding
-import com.example.univandroidproject.db.Trip
-import com.example.univandroidproject.db.TripAddDatabase
-import com.example.univandroidproject.db.TripDao
-import javax.sql.DataSource
+import com.example.univandroidproject.data.Trip
+import com.example.univandroidproject.data.TripRoomDatabase
 
 
 class SaveActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivitySaveBinding
-    private lateinit var tripAddDatabase: TripAddDatabase
+    private lateinit var tripAddDatabase: TripRoomDatabase
     private lateinit var tripList: List<Trip>
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -27,7 +24,7 @@ class SaveActivity : AppCompatActivity() {
         val view = binding.root
         setContentView(view)
 
-        tripAddDatabase = TripAddDatabase.getDatabase(this)!!
+        tripAddDatabase = TripRoomDatabase.getDatabase(this)!!
 
 
         //fillRecyclerview(1)
@@ -52,7 +49,7 @@ class SaveActivity : AppCompatActivity() {
 
         tripList = tripAddDatabase.tripDao().getAll()
         binding.recyclerview.adapter = AddTripAdapter(this, tripList,recyclerviewType){
-                trip ->  Toast.makeText(this,"Title : ${trip.title}", Toast.LENGTH_SHORT).show()
+                trip ->  Toast.makeText(this,"Title : ${trip.tripTitle}", Toast.LENGTH_SHORT).show()
         }
 
     }

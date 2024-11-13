@@ -12,7 +12,7 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
-import com.example.univandroidproject.db.Trip
+import com.example.univandroidproject.data.Trip
 import java.text.SimpleDateFormat
 import java.util.Locale
 

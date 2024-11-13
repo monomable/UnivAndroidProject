@@ -1,4 +1,3 @@
-import android.annotation.SuppressLint
 import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
@@ -7,7 +6,7 @@ import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
-import com.example.univandroidproject.db.Trip
+import com.example.univandroidproject.data.Trip
 
 class AddTripAdapter(var context: Context, var list:List<Trip>, var recyclerVeiwLayoutType : Int, val itemClickListener:(Trip)->Unit) : RecyclerView.Adapter<AddTripAdapter.Holder>() {
     inner class Holder(itemView: View,val itemClickListener:(Trip)->Unit) : RecyclerView.ViewHolder(itemView){
@@ -19,11 +18,11 @@ class AddTripAdapter(var context: Context, var list:List<Trip>, var recyclerVeiw
         var end_date : TextView = itemView.findViewById(R.id.item_end_date)
 
         fun bindData(context: Context, trip: Trip){
-            thumbnail.setImageResource(trip.thumbnail)
-            title.text = trip.title
-            contents.text = trip.contents
-            start_date.text = trip.start_day.toString()
-            end_date.text = trip.end_day.toString()
+            thumbnail.setImageResource(trip.tripThumbnail)
+            title.text = trip.tripTitle
+            contents.text = trip.tripContents
+            start_date.text = trip.tripStartDay.toString()
+            end_date.text = trip.tripEndDay.toString()
 
             itemView.setOnClickListener{
                 itemClickListener(trip)
