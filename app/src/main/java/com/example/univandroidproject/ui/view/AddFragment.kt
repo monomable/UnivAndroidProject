@@ -13,7 +13,8 @@ import androidx.fragment.app.Fragment
 import com.example.univandroidproject.AddActivity
 import com.example.univandroidproject.R
 
-class AddFragment : Fragment(){
+class AddFragment : Fragment() /*{
+
 
     private lateinit var file_img : ImageView
 
@@ -57,4 +58,4 @@ class AddFragment : Fragment(){
         }
     }
 
-}
+}*/
