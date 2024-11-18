@@ -93,7 +93,7 @@ class AddActivity : AppCompatActivity() {
 
         //addDataToList()
 
-        //imgAdapter = AddTripAdapter(ImgList)
+        imgAdapter = AddTripAdapter(ImgList)
         recyclerView.adapter = imgAdapter
 
 
@@ -113,13 +113,15 @@ class AddActivity : AppCompatActivity() {
         )
         datePickerDialog.show()
     }
+
+
     /*
     private fun addDataToList() {  // 리사이클러뷰 데이터 추가
-        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
-        ImgList.add(TripItem(R.drawable.outline_add_24, "추가"))
+        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
+        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
+        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
+        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
+        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
+        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
     }*/
 }

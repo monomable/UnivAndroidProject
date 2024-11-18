@@ -1,4 +1,3 @@
-import android.content.Context
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -8,44 +7,29 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
 import com.example.univandroidproject.data.Trip
 
-class AddTripAdapter(var context: Context, var list:List<Trip>, var recyclerVeiwLayoutType : Int, val itemClickListener:(Trip)->Unit) : RecyclerView.Adapter<AddTripAdapter.Holder>() {
-    inner class Holder(itemView: View,val itemClickListener:(Trip)->Unit) : RecyclerView.ViewHolder(itemView){
+class AddTripAdapter(private val ImgList : List<Trip>) :
+    RecyclerView.Adapter<AddTripAdapter.ImgViewHolder>() {
 
-        var thumbnail : ImageView = itemView.findViewById(R.id.item_thumbnail)
-        var title : TextView = itemView.findViewById(R.id.item_title)
-        var contents : TextView = itemView.findViewById(R.id.item_contents)
-        var start_date : TextView = itemView.findViewById(R.id.item_start_date)
-        var end_date : TextView = itemView.findViewById(R.id.item_end_date)
+    var onItemClick: ((Trip) -> Unit)? = null
 
-        fun bindData(context: Context, trip: Trip){
-            thumbnail.setImageResource(trip.tripThumbnail)
-            title.text = trip.tripTitle
-            contents.text = trip.tripContents
-            start_date.text = trip.tripStartDay.toString()
-            end_date.text = trip.tripEndDay.toString()
-
-            itemView.setOnClickListener{
-                itemClickListener(trip)
-            }
-        }
+    class ImgViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
+        val ImgView : ImageView = itemView.findViewById(R.id.imageView)
+        val ImgText : TextView = itemView.findViewById(R.id.textView)
     }
 
-    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): Holder {
-        var view = LayoutInflater.from(context).inflate(R.layout.item_list,parent,false)
-
-        if (recyclerVeiwLayoutType==2){
-            view = LayoutInflater.from(context).inflate(R.layout.item_list_grid,parent,false)
-        }
-
-        return Holder(view,itemClickListener)
+    override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImgViewHolder {
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.img_item_horizontal, parent, false)
+        return ImgViewHolder(view)
     }
 
-    override fun onBindViewHolder(holder: Holder, position: Int) {
-        holder.bindData(context,list[position])
+    override fun onBindViewHolder(holder: ImgViewHolder, position: Int) {
+        val Img = ImgList[position]
+        //holder.ImgView.setImageResource(Img.tripImage)
+        //holder.ImgText.text = Img.imgText
     }
 
     override fun getItemCount(): Int {
-        return list.size
+        return ImgList.size
     }
 
 }
