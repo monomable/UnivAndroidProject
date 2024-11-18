@@ -1,56 +1,64 @@
 package com.example.univandroidproject
 
-import AddTripAdapter
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.widget.Toast
-import androidx.recyclerview.widget.GridLayoutManager
-import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.appcompat.app.AppCompatActivity
+import com.example.univandroidproject.databinding.ActivityMainBinding
 import com.example.univandroidproject.databinding.ActivitySaveBinding
-import com.example.univandroidproject.data.Trip
-import com.example.univandroidproject.data.TripRoomDatabase
-
+import com.example.univandroidproject.db.TripRoomDatabase
+import com.example.univandroidproject.db.Trip
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
 
 class SaveActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivitySaveBinding
-    private lateinit var tripAddDatabase: TripRoomDatabase
-    private lateinit var tripList: List<Trip>
+    private lateinit var binding : ActivitySaveBinding
+    private lateinit var database: TripRoomDatabase
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_save)
         binding = ActivitySaveBinding.inflate(layoutInflater)
-        val view = binding.root
-        setContentView(view)
+        setContentView(binding.root)
 
-        tripAddDatabase = TripRoomDatabase.getDatabase(this)!!
+        database = TripRoomDatabase.getDatabase(this)
 
-
-        //fillRecyclerview(1)
-
-        // 뷰 바인딩으로 연결해야함, 원본은 kotlin-android-extensions 으로 참조했음
-        binding.btnGrid.setOnClickListener{
-            fillRecyclerview(2)
-        }
-        binding.btnLinear.setOnClickListener{
-            fillRecyclerview(1)
+        binding.saveButton.setOnClickListener {
+            val text = binding.edit.text.toString()
+            if (text.isNotEmpty()) {
+                saveText(text)
+            }
         }
 
+        binding.getButon.setOnClickListener {
+            loadTexts()
+        }
 
+        binding.deleteButton.setOnClickListener {
+            deleteTexts()
+        }
     }
-    private fun fillRecyclerview(recyclerviewType:Int){
 
-        binding.recyclerview.layoutManager = LinearLayoutManager(this)
-
-        if(recyclerviewType==2){
-            binding.recyclerview.layoutManager = GridLayoutManager(this,2)
+    private fun saveText(text:String){
+        CoroutineScope(Dispatchers.IO).launch {
+            database.tripDao().insert(Trip(tripTitle = text, tripContents = "contents", tripEndDay = 0, tripStartDay = 0))
+            binding.edit.text = null
         }
+    }
 
-        tripList = tripAddDatabase.tripDao().getAll()
-        binding.recyclerview.adapter = AddTripAdapter(this, tripList,recyclerviewType){
-                trip ->  Toast.makeText(this,"Title : ${trip.tripTitle}", Toast.LENGTH_SHORT).show()
+    private fun loadTexts() {
+        CoroutineScope(Dispatchers.IO).launch {
+            val texts = database.tripDao().getAll().joinToString("\n") { it.tripTitle }
+            withContext(Dispatchers.Main) {
+                binding.view.text = texts
+            }
         }
+    }
 
+    private fun deleteTexts(){
+        CoroutineScope(Dispatchers.IO).launch {
+            database.tripDao().deleteAll()
+            loadTexts()
+        }
     }
 }
