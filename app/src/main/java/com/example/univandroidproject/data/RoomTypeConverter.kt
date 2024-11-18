@@ -1,4 +1,4 @@
-package com.example.univandroidproject.db
+package com.example.univandroidproject.data
 
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory

@@ -1,9 +1,9 @@
 package com.example.univandroidproject.data
 
+import android.graphics.Bitmap
 import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
-import java.text.NumberFormat
 
 @Entity
 data class Trip(
@@ -17,11 +17,6 @@ data class Trip(
     val tripStartDay: Int,
     @ColumnInfo(name = "end_day")
     val tripEndDay: Int,
-    @ColumnInfo(name = "thumbnail")
-    val tripThumbnail: Int,
     @ColumnInfo(name = "image")
-    val tripImages: Int
+    val tripImage: Bitmap? = null
 )
-
-fun Trip.getFormattedId(): String =
-    NumberFormat.getCurrencyInstance().format(id)

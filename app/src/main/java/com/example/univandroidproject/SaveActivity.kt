@@ -2,10 +2,9 @@ package com.example.univandroidproject
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.example.univandroidproject.databinding.ActivityMainBinding
 import com.example.univandroidproject.databinding.ActivitySaveBinding
-import com.example.univandroidproject.db.TripRoomDatabase
-import com.example.univandroidproject.db.Trip
+import com.example.univandroidproject.data.TripRoomDatabase
+import com.example.univandroidproject.data.Trip
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
