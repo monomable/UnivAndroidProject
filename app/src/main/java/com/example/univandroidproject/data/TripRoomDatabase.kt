@@ -1,4 +1,4 @@
-package com.example.univandroidproject.data
+package com.example.univandroidproject.db
 
 import android.content.Context
 import androidx.room.Database
@@ -19,12 +19,11 @@ abstract class TripRoomDatabase :RoomDatabase(){
                 val instance = Room.databaseBuilder(
                     context.applicationContext,
                     TripRoomDatabase::class.java,
-                    "item_database"
+                    "trip-database"
                 )
                     .fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
-
                 instance
             }
         }
