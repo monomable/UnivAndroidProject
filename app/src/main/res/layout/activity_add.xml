@@ -8,7 +8,7 @@
     tools:context=".AddActivity">
 
     <Button
-        android:id="@+id/button"
+        android:id="@+id/saveButton"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="right"
@@ -74,6 +74,7 @@
                 android:text="제목"/>
 
             <EditText
+                android:id="@+id/title"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="24dp"
@@ -117,8 +118,18 @@
             android:textSize="30dp"
             android:padding="10dp"
             android:layout_marginLeft="10dp"
-            android:layout_gravity="left"
+            android:layout_gravity="left|center"
             android:text="태그"/>
+
+        <EditText
+            android:id="@+id/tag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:hint="#태그, #입력"/>
 
     </LinearLayout>
 
@@ -130,6 +141,7 @@
         android:background="@drawable/blue_tab_round">
 
         <EditText
+            android:id="@+id/contents"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30dp"

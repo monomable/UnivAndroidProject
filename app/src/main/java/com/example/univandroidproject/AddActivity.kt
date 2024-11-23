@@ -4,6 +4,7 @@ import AddTripAdapter
 import android.Manifest
 import android.app.DatePickerDialog
 import android.graphics.BitmapFactory
+import android.icu.text.CaseMap.Title
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Button
@@ -14,6 +15,11 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.data.Trip
+import com.example.univandroidproject.data.TripRoomDatabase
+import com.example.univandroidproject.databinding.ActivityAddBinding
+import kotlinx.coroutines.CoroutineScope
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.Locale
 
@@ -22,15 +28,16 @@ class AddActivity : AppCompatActivity() {
 
     lateinit var startDaybutton : Button
     lateinit var endDaybutton : Button
-    lateinit var file_img : ImageView
-    lateinit var file_img2 : ImageView
-    lateinit var file_img3 : ImageView
+    //lateinit var file_img : ImageView
 
     lateinit var recyclerView: RecyclerView
     lateinit var ImgList:ArrayList<Trip>
     lateinit var imgAdapter: AddTripAdapter
 
     private val calendar = Calendar.getInstance()
+
+    private lateinit var binding: ActivityAddBinding
+    private lateinit var database: TripRoomDatabase
 
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
     private val checkPermission = registerForActivityResult(ActivityResultContracts.RequestMultiplePermissions()) { result ->
@@ -50,7 +57,26 @@ class AddActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        setContentView(R.layout.activity_add)
+        binding = ActivityAddBinding.inflate(layoutInflater)
+        setContentView(binding.root)
+
+        database = TripRoomDatabase.getDatabase(this)
+
+        binding.saveButton.setOnClickListener {
+            val title = binding.title.text.toString()
+            val contents = binding.contents.text.toString()
+            //val startDay = Integer.parseInt(binding.startdayButton.text.toString())
+            //val endDay = Integer.parseInt(binding.enddayButton.text.toString())
+            val startDay = binding.startdayButton.text.toString()
+            val endDay = binding.enddayButton.text.toString()
+
+            //비어있는지 확인
+            if (title.isNotEmpty() || contents.isNotEmpty() || startDay.isNotEmpty() || endDay.isNotEmpty()) { // != null
+                saveTrip(title, contents, startDay, endDay)
+            }
+        }
+
+
 
         recyclerInit() //리사이클러 뷰 생성 코드
 
@@ -71,6 +97,15 @@ class AddActivity : AppCompatActivity() {
 
         endDaybutton.setOnClickListener{
             showDatePicker(endDaybutton)
+        }
+
+    }
+
+    private fun saveTrip(title: String, contents: String, startDay: String, endDay: String){
+        CoroutineScope(Dispatchers.IO).launch {
+            database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay))
+            //Toast.makeText(this@AddActivity, "저장 완료!", Toast.LENGTH_SHORT).show()
+            // mainactivity로 이동 해야함
         }
 
     }
@@ -110,11 +145,11 @@ class AddActivity : AppCompatActivity() {
     private fun addDataToList() {  // 리사이클러뷰 데이터 추가
         val bm = BitmapFactory.decodeResource(resources, R.drawable.plusicon)
 
-        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
-        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
-        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
-        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
-        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
-        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
+        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
+        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
+        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
+        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
+        //ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101", bm))
     }
 }

@@ -6,7 +6,7 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import androidx.room.TypeConverters
 
-@Database(entities = [Trip::class], version = 1, exportSchema = false)
+@Database(entities = [Trip::class], version = 3, exportSchema = false)
 @TypeConverters(RoomTypeConverter::class)
 abstract class TripRoomDatabase :RoomDatabase(){
 
@@ -23,7 +23,7 @@ abstract class TripRoomDatabase :RoomDatabase(){
                     TripRoomDatabase::class.java,
                     "trip_database"
                 )
-                    .fallbackToDestructiveMigration()
+                    //.fallbackToDestructiveMigration()
                     .build()
                 INSTANCE = instance
                 instance

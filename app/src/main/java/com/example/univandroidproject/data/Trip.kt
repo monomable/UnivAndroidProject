@@ -10,13 +10,13 @@ data class Trip(
     @PrimaryKey(autoGenerate = true)
     val id: Int = 0,
     @ColumnInfo(name = "title")
-    val tripTitle: String,
+    val tripTitle: String = "",
     @ColumnInfo(name = "contents")
-    val tripContents: String,
+    val tripContents: String = "",
     @ColumnInfo(name = "start_day")
-    val tripStartDay: Int,
+    val tripStartDay: String = "",
     @ColumnInfo(name = "end_day")
-    val tripEndDay: Int,
-    @ColumnInfo(name = "image")
-    val tripImage: Bitmap? = null
+    val tripEndDay: String = "",
+    /*@ColumnInfo(name = "image")
+    val tripImage: Bitmap? = null //Null 허용*/
 )
