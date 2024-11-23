@@ -3,6 +3,7 @@ package com.example.univandroidproject
 import AddTripAdapter
 import android.Manifest
 import android.app.DatePickerDialog
+import android.graphics.BitmapFactory
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Button
@@ -15,6 +16,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.data.Trip
 import java.text.SimpleDateFormat
 import java.util.Locale
+
 
 class AddActivity : AppCompatActivity() {
 
@@ -54,31 +56,20 @@ class AddActivity : AppCompatActivity() {
 
         checkPermission.launch(permissionList)
 
-
         //file_img = findViewById<ImageView>(R.id.imageView)
 
         //file_img.setOnClickListener {
         //    readImage.launch("image/*")
         //}
 
-
-
         startDaybutton = findViewById<Button>(R.id.startday_Button)
         endDaybutton = findViewById<Button>(R.id.endday_Button)
 
         startDaybutton.setOnClickListener{
-
             showDatePicker(startDaybutton)
-
-            //startDaybutton.text = newFragment.getText()
-            //daypickbutton.setText = "$year/${month+1}/$dayOfMonth"
-            //Toast.makeText(this, "날짜 선택 버튼 눌림", Toast.LENGTH_SHORT).show()
         }
 
         endDaybutton.setOnClickListener{
-            /*
-            val newFragment = DatePickerFragment()
-            newFragment.show(supportFragmentManager, "datePicker")*/
             showDatePicker(endDaybutton)
         }
 
@@ -91,7 +82,7 @@ class AddActivity : AppCompatActivity() {
 
         ImgList = ArrayList()
 
-        //addDataToList()
+        addDataToList()
 
         imgAdapter = AddTripAdapter(ImgList)
         recyclerView.adapter = imgAdapter
@@ -115,13 +106,15 @@ class AddActivity : AppCompatActivity() {
     }
 
 
-    /*
+
     private fun addDataToList() {  // 리사이클러뷰 데이터 추가
-        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
-        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
-        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
-        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
-        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
-        ImgList.add(Trip(R.drawable.outline_add_24, "추가"))
-    }*/
+        val bm = BitmapFactory.decodeResource(resources, R.drawable.plusicon)
+
+        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+        ImgList.add(Trip(0,"추가", "추가", 20240101, 20240101, bm))
+    }
 }

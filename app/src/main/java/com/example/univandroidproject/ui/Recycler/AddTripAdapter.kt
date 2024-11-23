@@ -24,7 +24,7 @@ class AddTripAdapter(private val ImgList : List<Trip>) :
 
     override fun onBindViewHolder(holder: ImgViewHolder, position: Int) {
         val Img = ImgList[position]
-        //holder.ImgView.setImageResource(Img.tripImage)
+        holder.ImgView.setImageBitmap(Img.tripImage)
         //holder.ImgText.text = Img.imgText
     }
 
