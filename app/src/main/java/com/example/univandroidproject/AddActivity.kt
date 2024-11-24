@@ -105,8 +105,9 @@ class AddActivity : AppCompatActivity() {
         CoroutineScope(Dispatchers.IO).launch {
             database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay))
             //Toast.makeText(this@AddActivity, "저장 완료!", Toast.LENGTH_SHORT).show()
-            // mainactivity로 이동 해야함
+
         }
+        finish() // mainactivity로 이동
 
     }
 

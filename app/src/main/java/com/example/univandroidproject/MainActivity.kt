@@ -20,18 +20,20 @@ class MainActivity : AppCompatActivity() {
     private val binding: ActivityMainBinding by lazy {
         ActivityMainBinding.inflate(layoutInflater)
     }
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(binding.root)
 
         setBottomNavigationView()
 
-        // 앱 초기 실행 시 홈화면으로 설정
+        // 앱 초기 실행 시 홈 프래그먼트 화면으로 설정
         if (savedInstanceState == null) {
             binding.bottomNavigationView.selectedItemId = R.id.fragment_home
         }
     }
 
+    // 하단바 메뉴 설정
     fun setBottomNavigationView() {
         binding.bottomNavigationView.setOnItemSelectedListener { item ->
             when (item.itemId) {
@@ -55,4 +57,5 @@ class MainActivity : AppCompatActivity() {
             }
         }
     }
+
 }

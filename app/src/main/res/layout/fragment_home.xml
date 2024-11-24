@@ -24,18 +24,32 @@
         android:elevation="5dp"
         android:hint="@string/search_hint" />
 
-    <Button
-        android:id="@+id/addButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="100dp"
-        android:background="#00ff0000"
-        android:drawableTop="@drawable/hero_circleplus_resize"
-        android:drawableTint="@color/light_gray"
-        android:gravity="bottom|center_horizontal"
-        android:text="@string/add_button"
-        android:textColor="@color/black"
-        android:textSize="20dp" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        >
+
+        <Button
+            android:id="@+id/addButton"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="100dp"
+            android:background="#00ff0000"
+            android:drawableTop="@drawable/hero_circleplus_resize"
+            android:drawableTint="@color/light_gray"
+            android:gravity="bottom|center_horizontal"
+            android:text="@string/add_button"
+            android:textColor="@color/black"
+            android:textSize="20dp"
+            android:visibility="visible"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/tripList"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="invisible"/>
+
+    </FrameLayout>
 
 
 </LinearLayout>
