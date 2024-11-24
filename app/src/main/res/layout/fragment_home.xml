@@ -29,25 +29,21 @@
         android:layout_height="match_parent"
         >
 
-        <Button
-            android:id="@+id/addButton"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="100dp"
-            android:background="#00ff0000"
-            android:drawableTop="@drawable/hero_circleplus_resize"
-            android:drawableTint="@color/light_gray"
-            android:gravity="bottom|center_horizontal"
-            android:text="@string/add_button"
-            android:textColor="@color/black"
-            android:textSize="20dp"
-            android:visibility="visible"/>
-
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/tripList"
+            android:id="@+id/tripRecyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:visibility="invisible"/>
+            android:visibility="visible"/>
+
+        <androidx.appcompat.widget.AppCompatButton
+            android:id="@+id/addButton"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="bottom|right"
+            android:background="@drawable/hero_circleplus_resize"
+            android:backgroundTint="@color/blue"
+            android:visibility="visible"
+            android:layout_marginBottom="10dp"/>
 
     </FrameLayout>
 

@@ -102,7 +102,7 @@ class AddActivity : AppCompatActivity() {
     }
 
     private fun saveTrip(title: String, contents: String, startDay: String, endDay: String){
-        CoroutineScope(Dispatchers.IO).launch {
+        CoroutineScope(Dispatchers.IO).launch {  // 코루틴 사용 비동기로 실행
             database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay))
             //Toast.makeText(this@AddActivity, "저장 완료!", Toast.LENGTH_SHORT).show()
 
