@@ -8,6 +8,9 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModel
+import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.AddActivity
@@ -15,6 +18,7 @@ import com.example.univandroidproject.MainActivity
 import com.example.univandroidproject.R
 import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripRoomDatabase
+import com.example.univandroidproject.data.TripViewModel
 import com.example.univandroidproject.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -25,6 +29,7 @@ class HomeFragment: Fragment(), View.OnClickListener {
 
     private lateinit var database: TripRoomDatabase
     private lateinit var binding: FragmentHomeBinding
+    private lateinit var mTripViewModel: TripViewModel
 
     override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
 
@@ -52,11 +57,19 @@ class HomeFragment: Fragment(), View.OnClickListener {
             }
         }
 
-        val adapter = HomeTripAdapter(tripList)
-        adapter.notifyDataSetChanged()
+        val adapter = HomeTripAdapter()
+        val recyclerView = binding.tripRecyclerView
+        //adapter.notifyDataSetChanged()
 
-        binding.tripRecyclerView.adapter = adapter
-        binding.tripRecyclerView.layoutManager=LinearLayoutManager(requireContext())
+        recyclerView.adapter = adapter
+        recyclerView.layoutManager=LinearLayoutManager(requireContext())
+
+        mTripViewModel = ViewModelProvider(this).get(TripViewModel::class.java)
+        mTripViewModel.readAllData.observe(viewLifecycleOwner, Observer { trip ->
+            adapter.setData(trip)
+        })
+
+        setHasOptionsMenu(true)
 
         //return view
         return binding.root
@@ -92,6 +105,7 @@ class HomeFragment: Fragment(), View.OnClickListener {
             val texts = database.tripDao().getAll().joinToString("\n") { it.tripTitle }
             withContext(Dispatchers.Main) {
                 //binding.view.text = texts  // 리사이클러뷰 적용 해야함
+
             }
         }
     }

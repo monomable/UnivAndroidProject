@@ -43,7 +43,8 @@
             android:background="@drawable/hero_circleplus_resize"
             android:backgroundTint="@color/blue"
             android:visibility="visible"
-            android:layout_marginBottom="10dp"/>
+            android:layout_marginBottom="10dp"
+            tools:ignore="SpeakableTextPresentCheck"/>
 
     </FrameLayout>
 
