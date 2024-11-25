@@ -3,12 +3,11 @@ package com.example.univandroidproject
 import AddTripAdapter
 import android.Manifest
 import android.app.DatePickerDialog
+import android.graphics.Bitmap
 import android.graphics.BitmapFactory
-import android.icu.text.CaseMap.Title
 import android.icu.util.Calendar
 import android.os.Bundle
 import android.widget.Button
-import android.widget.ImageView
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
@@ -69,10 +68,11 @@ class AddActivity : AppCompatActivity() {
             //val endDay = Integer.parseInt(binding.enddayButton.text.toString())
             val startDay = binding.startdayButton.text.toString()
             val endDay = binding.enddayButton.text.toString()
+            val img = BitmapFactory.decodeResource(resources, R.drawable.plusicon)
 
             //비어있는지 확인
             if (title.isNotEmpty() || contents.isNotEmpty() || startDay.isNotEmpty() || endDay.isNotEmpty()) { // != null
-                saveTrip(title, contents, startDay, endDay)
+                saveTrip(title, contents, startDay, endDay, img)
             }
         }
 
@@ -101,9 +101,15 @@ class AddActivity : AppCompatActivity() {
 
     }
 
-    private fun saveTrip(title: String, contents: String, startDay: String, endDay: String){
+    private fun saveTrip(
+        title: String,
+        contents: String,
+        startDay: String,
+        endDay: String,
+        img: Bitmap
+    ){
         CoroutineScope(Dispatchers.IO).launch {  // 코루틴 사용 비동기로 실행
-            database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay))
+            database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay, tripImage = img))
             //Toast.makeText(this@AddActivity, "저장 완료!", Toast.LENGTH_SHORT).show()
 
         }

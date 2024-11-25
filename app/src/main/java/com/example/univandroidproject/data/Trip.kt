@@ -17,6 +17,6 @@ data class Trip(
     val tripStartDay: String = "",
     @ColumnInfo(name = "end_day")
     val tripEndDay: String = "",
-    /*@ColumnInfo(name = "image")
-    val tripImage: Bitmap? = null //Null 허용*/
+    @ColumnInfo(name = "image")
+    val tripImage: Bitmap? = null //Null 허용
 )
