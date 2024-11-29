@@ -31,11 +31,6 @@ class AddActivity : AppCompatActivity() {
 
     lateinit var startDaybutton : Button
     lateinit var endDaybutton : Button
-    //lateinit var file_img : ImageView
-
-    lateinit var recyclerView: RecyclerView
-    lateinit var ImgList:ArrayList<Trip>
-    lateinit var imgAdapter: AddTripAdapter
 
     private val calendar = Calendar.getInstance()
 
@@ -54,11 +49,6 @@ class AddActivity : AppCompatActivity() {
         }
     }
 
-    /*
-    private val readImage = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
-        file_img.setImageURI(uri)
-    }*/
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityAddBinding.inflate(layoutInflater)
@@ -68,7 +58,7 @@ class AddActivity : AppCompatActivity() {
 
 
         val sampleData = listOf("Image 1", "Image 2", "Image 3")
-        adapter = AddTripAdapter(sampleData) { onRecyclerViewItemClicked() }
+        adapter = AddTripAdapter(sampleData) { position -> onRecyclerViewItemClicked(position) }
 
         binding.imgBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.imgBoard.adapter = adapter
@@ -77,8 +67,6 @@ class AddActivity : AppCompatActivity() {
         binding.saveButton.setOnClickListener {
             val title = binding.title.text.toString()
             val contents = binding.contents.text.toString()
-            //val startDay = Integer.parseInt(binding.startdayButton.text.toString())
-            //val endDay = Integer.parseInt(binding.enddayButton.text.toString())
             val startDay = binding.startdayButton.text.toString()
             val endDay = binding.enddayButton.text.toString()
             val img = BitmapFactory.decodeResource(resources, R.drawable.plusicon)
@@ -89,17 +77,7 @@ class AddActivity : AppCompatActivity() {
             }
         }
 
-
-
-        //recyclerInit() //리사이클러 뷰 생성 코드
-
         checkPermission.launch(permissionList)
-
-        //file_img = findViewById<ImageView>(R.id.imageView)
-
-        //file_img.setOnClickListener {
-        //    readImage.launch("image/*")
-        //}
 
         startDaybutton = findViewById<Button>(R.id.startday_Button)
         endDaybutton = findViewById<Button>(R.id.endday_Button)
@@ -123,7 +101,6 @@ class AddActivity : AppCompatActivity() {
     ){
         CoroutineScope(Dispatchers.IO).launch {  // 코루틴 사용 비동기로 실행
             database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay, tripImage = img))
-            //Toast.makeText(this@AddActivity, "저장 완료!", Toast.LENGTH_SHORT).show()
 
         }
         finish() // mainactivity로 이동
@@ -131,35 +108,25 @@ class AddActivity : AppCompatActivity() {
     }
 
 
-
-    /* (구)리사이클러뷰 샘플 이미지 삽입 코드
-    private fun recyclerInit() {
-        recyclerView = findViewById(R.id.img_board)
-        recyclerView.setHasFixedSize(true)
-        recyclerView.layoutManager = LinearLayoutManager(this, RecyclerView.HORIZONTAL, false)
-
-        ImgList = ArrayList()
-
-        addDataToList()
-
-        imgAdapter = AddTripAdapter(ImgList)
-        recyclerView.adapter = imgAdapter
-
-
-    }*/
+    private var currentImagePosition = -1
 
     private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let { saveImageToDatabase(it) }
+        uri?.let { saveImageToDatabase(it, currentImagePosition) }
     }
 
-    private fun onRecyclerViewItemClicked() {
+    private fun onRecyclerViewItemClicked(position: Int) {
         // Launch image picker
+        currentImagePosition = position
         selectImageLauncher.launch("image/*")
     }
 
-    private fun saveImageToDatabase(uri: Uri) {
+    private fun saveImageToDatabase(uri: Uri, position: Int) {
         lifecycleScope.launch(Dispatchers.IO) {
             database.tripDao().insertImage(ImageEntity(imagePath = uri.toString()))
+            val selectedImageBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
+            runOnUiThread {
+                adapter.updateImage(position, selectedImageBitmap)
+            }
         }
     }
 
@@ -176,18 +143,5 @@ class AddActivity : AppCompatActivity() {
             calendar.get(Calendar.DAY_OF_MONTH)
         )
         datePickerDialog.show()
-    }
-
-
-
-    private fun addDataToList() {  // 리사이클러뷰 데이터 추가
-        val bm = BitmapFactory.decodeResource(resources, R.drawable.plusicon)
-
-        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
-        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
-        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
-        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
-        ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101"))
-        //ImgList.add(Trip(0,"추가", "추가", "20240101", "20240101", bm))
     }
 }
