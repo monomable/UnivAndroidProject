@@ -70,7 +70,7 @@ class AddActivity : AppCompatActivity() {
         val sampleData = listOf("Image 1", "Image 2", "Image 3")
         adapter = AddTripAdapter(sampleData) { onRecyclerViewItemClicked() }
 
-        binding.imgBoard.layoutManager = LinearLayoutManager(this)
+        binding.imgBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.imgBoard.adapter = adapter
 
 
