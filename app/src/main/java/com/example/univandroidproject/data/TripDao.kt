@@ -40,5 +40,11 @@ interface TripDao {
     @Delete
     suspend fun delete(trip: Trip)
 
+    @Insert
+    suspend fun insertImage(image: ImageEntity)
+
+    @Query("SELECT * FROM images")
+    suspend fun getAllImages(): List<ImageEntity>
+
 
 }

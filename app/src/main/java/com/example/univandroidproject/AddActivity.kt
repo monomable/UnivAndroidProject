@@ -6,13 +6,17 @@ import android.app.DatePickerDialog
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
 import android.icu.util.Calendar
+import android.net.Uri
 import android.os.Bundle
+import android.provider.CalendarContract.Instances
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.univandroidproject.data.ImageEntity
 import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripRoomDatabase
 import com.example.univandroidproject.databinding.ActivityAddBinding
@@ -36,6 +40,7 @@ class AddActivity : AppCompatActivity() {
     private val calendar = Calendar.getInstance()
 
     private lateinit var binding: ActivityAddBinding
+    private lateinit var adapter: AddTripAdapter
     private lateinit var database: TripRoomDatabase
 
     private val permissionList = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE)
@@ -61,6 +66,14 @@ class AddActivity : AppCompatActivity() {
 
         database = TripRoomDatabase.getDatabase(this)
 
+
+        val sampleData = listOf("Image 1", "Image 2", "Image 3")
+        adapter = AddTripAdapter(sampleData) { onRecyclerViewItemClicked() }
+
+        binding.imgBoard.layoutManager = LinearLayoutManager(this)
+        binding.imgBoard.adapter = adapter
+
+
         binding.saveButton.setOnClickListener {
             val title = binding.title.text.toString()
             val contents = binding.contents.text.toString()
@@ -78,7 +91,7 @@ class AddActivity : AppCompatActivity() {
 
 
 
-        recyclerInit() //리사이클러 뷰 생성 코드
+        //recyclerInit() //리사이클러 뷰 생성 코드
 
         checkPermission.launch(permissionList)
 
@@ -117,6 +130,9 @@ class AddActivity : AppCompatActivity() {
 
     }
 
+
+
+    /* (구)리사이클러뷰 샘플 이미지 삽입 코드
     private fun recyclerInit() {
         recyclerView = findViewById(R.id.img_board)
         recyclerView.setHasFixedSize(true)
@@ -130,6 +146,21 @@ class AddActivity : AppCompatActivity() {
         recyclerView.adapter = imgAdapter
 
 
+    }*/
+
+    private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
+        uri?.let { saveImageToDatabase(it) }
+    }
+
+    private fun onRecyclerViewItemClicked() {
+        // Launch image picker
+        selectImageLauncher.launch("image/*")
+    }
+
+    private fun saveImageToDatabase(uri: Uri) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            database.tripDao().insertImage(ImageEntity(imagePath = uri.toString()))
+        }
     }
 
     private fun showDatePicker(button: Button) {
