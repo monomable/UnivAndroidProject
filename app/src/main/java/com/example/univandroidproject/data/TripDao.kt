@@ -32,7 +32,7 @@ interface TripDao {
     suspend fun addTrip(trip: Trip)
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
-    suspend fun insert(trip: Trip)
+    suspend fun insert(trip: Trip): Long
 
     @Update
     suspend fun update(trip: Trip)

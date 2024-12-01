@@ -8,19 +8,16 @@ import android.graphics.BitmapFactory
 import android.icu.util.Calendar
 import android.net.Uri
 import android.os.Bundle
-import android.provider.CalendarContract.Instances
 import android.widget.Button
 import android.widget.Toast
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
-import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.data.ImageEntity
 import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripRoomDatabase
 import com.example.univandroidproject.databinding.ActivityAddBinding
-import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
@@ -57,7 +54,7 @@ class AddActivity : AppCompatActivity() {
         database = TripRoomDatabase.getDatabase(this)
 
 
-        val sampleData = listOf("Image 1", "Image 2", "Image 3")
+        val sampleData = listOf("Image 1", "Image 2", "Image 3", "Image 4")
         adapter = AddTripAdapter(sampleData) { position -> onRecyclerViewItemClicked(position) }
 
         binding.imgBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -99,19 +96,39 @@ class AddActivity : AppCompatActivity() {
         endDay: String,
         img: Bitmap
     ){
-        CoroutineScope(Dispatchers.IO).launch {  // 코루틴 사용 비동기로 실행
-            database.tripDao().insert(Trip(tripTitle = title, tripContents = contents, tripStartDay = startDay, tripEndDay = endDay, tripImage = img))
+        lifecycleScope.launch(Dispatchers.IO) {
+            // Trip을 먼저 저장
+            val tripId = database.tripDao().insert(Trip(
+                tripTitle = title,
+                tripContents = contents,
+                tripStartDay = startDay,
+                tripEndDay = endDay,
+                tripImage = img
+            ))
 
+            // 저장된 Trip ID와 연결하여 이미지를 저장
+            selectedImages.forEach { uri ->
+                database.tripDao().insertImage(ImageEntity(
+                    tripId = tripId, // Trip ID와 연결
+                    imagePath = uri.toString()
+                ))
+            }
+
+            runOnUiThread { finish() } // MainActivity로 이동
         }
-        finish() // mainactivity로 이동
 
     }
 
 
     private var currentImagePosition = -1
+    private val selectedImages = mutableListOf<Uri>()
 
     private val selectImageLauncher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri: Uri? ->
-        uri?.let { saveImageToDatabase(it, currentImagePosition) }
+        uri?.let {
+            selectedImages.add(it) // 선택된 이미지를 리스트에 추가
+            val selectedImageBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(it))
+            adapter.updateImage(currentImagePosition, selectedImageBitmap)
+        }
     }
 
     private fun onRecyclerViewItemClicked(position: Int) {
@@ -120,15 +137,6 @@ class AddActivity : AppCompatActivity() {
         selectImageLauncher.launch("image/*")
     }
 
-    private fun saveImageToDatabase(uri: Uri, position: Int) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            database.tripDao().insertImage(ImageEntity(imagePath = uri.toString()))
-            val selectedImageBitmap = BitmapFactory.decodeStream(contentResolver.openInputStream(uri))
-            runOnUiThread {
-                adapter.updateImage(position, selectedImageBitmap)
-            }
-        }
-    }
 
     private fun showDatePicker(button: Button) {
         val datePickerDialog = DatePickerDialog(this, {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
