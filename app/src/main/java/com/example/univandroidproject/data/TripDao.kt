@@ -34,17 +34,23 @@ interface TripDao {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun insert(trip: Trip): Long
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertImage(image: ImageEntity)
+
     @Update
     suspend fun update(trip: Trip)
 
     @Delete
     suspend fun delete(trip: Trip)
 
-    @Insert
-    suspend fun insertImage(image: ImageEntity)
-
     @Query("SELECT * FROM images")
     suspend fun getAllImages(): List<ImageEntity>
+
+    @Query("DELETE FROM images WHERE tripId = :tripId AND imageKey = :imageKey")
+    suspend fun deleteImage(tripId: Long, imageKey: String)
+
+    @Query("SELECT * FROM images WHERE tripId = :tripId")
+    suspend fun getImagesByTripId(tripId: Long): List<ImageEntity>
 
 
 }
