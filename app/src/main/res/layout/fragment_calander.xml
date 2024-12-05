@@ -17,10 +17,12 @@
         android:layout_height="wrap_content"
         android:layout_margin="10dp"
         android:background="@drawable/pink_tab_round">
+
         <CalendarView
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_gravity="center_vertical"/>
+
     </LinearLayout>
 
 </LinearLayout>

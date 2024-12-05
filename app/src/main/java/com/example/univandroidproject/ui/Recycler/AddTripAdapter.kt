@@ -8,7 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
 import com.example.univandroidproject.databinding.ImgItemHorizontalBinding
 
-class AddTripAdapter(
+class AddTripAdapter(  // 현재 사용 안하는 중 곧 삭제 예정
     private val data: List<String>,
     private val itemClickListener: (Int) -> Unit
 ) : RecyclerView.Adapter<AddTripAdapter.ViewHolder>() {

@@ -24,9 +24,11 @@ interface TripDao {
     @Query("SELECT * FROM Trip")
     suspend fun getAll(): List<Trip>
 
+    @Query("SELECT * FROM trip")
+    suspend fun getAllTrips(): List<Trip>
+
     @Query("DELETE FROM Trip")
     suspend fun deleteAll()
-
 
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun addTrip(trip: Trip)

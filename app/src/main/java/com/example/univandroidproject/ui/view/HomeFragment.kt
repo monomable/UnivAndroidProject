@@ -8,17 +8,17 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.ViewModelProvider
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.AddActivity
-import com.example.univandroidproject.MainActivity
 import com.example.univandroidproject.R
 import com.example.univandroidproject.data.Trip
+import com.example.univandroidproject.data.TripDao
 import com.example.univandroidproject.data.TripRoomDatabase
 import com.example.univandroidproject.data.TripViewModel
+import com.example.univandroidproject.data.TripWithImages
 import com.example.univandroidproject.databinding.FragmentHomeBinding
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
@@ -27,70 +27,39 @@ import kotlinx.coroutines.withContext
 
 class HomeFragment: Fragment(), View.OnClickListener {
 
-    private lateinit var database: TripRoomDatabase
-    private lateinit var binding: FragmentHomeBinding
-    private lateinit var mTripViewModel: TripViewModel
+    private lateinit var tripDao: TripDao
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var tripAdapter: HomeTripAdapter
 
-    override fun onCreateView(inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?): View? {
+    private val tripList = mutableListOf<TripWithImages>() // Trip 데이터와 관련 이미지를 포함한 리스트
 
-        //return inflater.inflate(R.layout.fragment_home, container, false)
-        //fragment_home과 연결시켜 return해줌.
+    override fun onCreateView(
+        inflater: LayoutInflater, container: ViewGroup?, savedInstanceState: Bundle?
+    ): View? {
+        val view = inflater.inflate(R.layout.fragment_home, container, false)
 
-        binding = FragmentHomeBinding.inflate(inflater)
-
-        //val view: View = inflater.inflate(R.layout.fragment_home, container, false)
-
-        val btn: Button = binding.addButton
-
+        val btn: Button = view.findViewById(R.id.addButton)
         btn.setOnClickListener(this)
 
+        // RecyclerView 초기화
+        recyclerView = view.findViewById(R.id.tripRecyclerView)
+        tripAdapter = HomeTripAdapter(tripList)
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = tripAdapter
 
-        var database : TripRoomDatabase? = null
-        var tripList = mutableListOf<Trip>()
+        // Room Database 초기화
+        val database = TripRoomDatabase.getDatabase(requireContext())
+        tripDao = database.tripDao()
 
-        database = TripRoomDatabase.getDatabase(requireContext())
+        // 데이터 로드
+        loadTripsAndImages()
 
-        CoroutineScope(Dispatchers.IO).launch {  // 코루틴 사용 비동기로 실행
-            val savedTrips = database!!.tripDao().getAll()
-            if (savedTrips.isNotEmpty()){
-                tripList.addAll(savedTrips)
-            }
-        }
-
-        val adapter = HomeTripAdapter()
-        val recyclerView = binding.tripRecyclerView
-        //adapter.notifyDataSetChanged()
-
-        recyclerView.adapter = adapter
-        recyclerView.layoutManager=LinearLayoutManager(requireContext())
-
-        mTripViewModel = ViewModelProvider(this).get(TripViewModel::class.java)
-        mTripViewModel.readAllData.observe(viewLifecycleOwner, Observer { trip ->
-            adapter.setData(trip)
-        })
-
-        setHasOptionsMenu(true)
-
-        //return view
-        return binding.root
-    }
-
-    companion object {
-        fun newInstance(): HomeFragment {
-            return HomeFragment()
-        }
+        return view
     }
 
     override fun onClick(v: View?) {
         when (v?.id) {
             R.id.addButton -> {
-                //Toast.makeText(activity, "버튼 눌림", Toast.LENGTH_SHORT).show()
-
-                //fragment 내부 간의 이동
-                //requireActivity().supportFragmentManager.beginTransaction().replace(R.id.main_container, AddFragment()).commit()
-                //true // 뒤로가기가 안됨..
-                //val intent = Intent(getActivity(), AddActivity::class.java)
-                //startActivity(intent)
                 val intent = Intent(getActivity(), AddActivity::class.java)
                 getActivity()?.startActivity(intent)
             }
@@ -100,13 +69,17 @@ class HomeFragment: Fragment(), View.OnClickListener {
         }
     }
 
-    private fun loadTrip() {
-        CoroutineScope(Dispatchers.IO).launch {
-            val texts = database.tripDao().getAll().joinToString("\n") { it.tripTitle }
-            withContext(Dispatchers.Main) {
-                //binding.view.text = texts  // 리사이클러뷰 적용 해야함
+    private fun loadTripsAndImages() {
+        lifecycleScope.launch {
+            val trips = tripDao.getAllTrips()
+            tripList.clear()
 
+            for (trip in trips) {
+                val images = tripDao.getImagesByTripId(trip.id.toLong())
+                tripList.add(TripWithImages(trip, images))
             }
+
+            tripAdapter.notifyDataSetChanged()
         }
     }
 }
