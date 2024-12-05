@@ -44,8 +44,8 @@ class AddActivity : AppCompatActivity() {
     private lateinit var database: TripRoomDatabase
     private lateinit var tripDao: TripDao
 
-    private val tripId: Long = 1L
-    private val selectedImages = mutableListOf<Uri>()
+    //private val tripId: Long = 1L
+    //private val selectedImages = mutableListOf<Uri>()
 
     private val imageList = mutableListOf<ImageEntity?>() // RecyclerView와 데이터 동기화를 위한 리스트
 
@@ -65,6 +65,7 @@ class AddActivity : AppCompatActivity() {
         binding = ActivityAddBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        // TripRoom Database 초기화
         database = TripRoomDatabase.getDatabase(this)
         tripDao = database.tripDao()
 
@@ -85,7 +86,7 @@ class AddActivity : AppCompatActivity() {
 
             //비어있는지 확인
             if (title.isNotEmpty() || contents.isNotEmpty() || startDay.isNotEmpty() || endDay.isNotEmpty()) { // != null
-                saveTrip(title, contents, tag, startDay, endDay)
+                saveTripWithImages(title, contents, tag, startDay, endDay)
             }
 
             // imageEntitiy에 trip id로 이미지 저장
@@ -106,7 +107,7 @@ class AddActivity : AppCompatActivity() {
 
     }
 
-    private fun saveTrip(
+    private fun saveTripWithImages(
         title: String,
         contents: String,
         tag: String,
@@ -124,12 +125,10 @@ class AddActivity : AppCompatActivity() {
             ))
 
             // 저장된 Trip ID와 연결하여 이미지를 저장
-            selectedImages.forEach { uri ->
-                database.tripDao().insertImage(ImageEntity(
-                    tripId = tripId, // Trip ID와 연결
-                    imageKey = uri.toString()
-                ))
-            }
+            val imagesToSave = imageList.filterNotNull().map { it.copy(tripId = tripId) }
+            tripDao.insertImages(imagesToSave)
+
+            Toast.makeText(this@AddActivity, "Trip and images saved successfully!", Toast.LENGTH_SHORT).show()
 
             runOnUiThread { finish() } // MainActivity로 이동
         }
@@ -138,9 +137,9 @@ class AddActivity : AppCompatActivity() {
 
     private fun loadImagesFromDatabase() {
         lifecycleScope.launch {
-            val images = tripDao.getImagesByTripId(tripId)
+            //val images = tripDao.getImagesByTripId(tripId)
             imageList.clear()
-            imageList.addAll(images)
+            //imageList.addAll(images)
             imageList.add(null) // "추가 아이콘" 추가
             adapter.notifyDataSetChanged()
         }
@@ -155,7 +154,7 @@ class AddActivity : AppCompatActivity() {
         val imageEntity = imageList[position]
         if (imageEntity != null) {
             lifecycleScope.launch {
-                tripDao.deleteImage(tripId, imageEntity.imageKey)
+                //tripDao.deleteImage(tripId, imageEntity.imageKey)
                 deleteImageFromInternalStorage(this@AddActivity, imageEntity.imageKey)
                 imageList.removeAt(position)
                 adapter.notifyItemRemoved(position)
@@ -218,14 +217,9 @@ class AddActivity : AppCompatActivity() {
                 val imageKey = saveImageToInternalStorage(this, bitmap)
 
                 if (imageKey != null) {
-                    val newImage = ImageEntity(tripId = tripId, imageKey = imageKey)
-                    lifecycleScope.launch {
-                        tripDao.insertImage(newImage)
-
-                        // 새로운 이미지를 "추가 아이콘" 앞에 추가
-                        imageList.add(imageList.size - 1, newImage)
-                        adapter.notifyItemInserted(imageList.size - 2) // 새로운 이미지 위치
-                    }
+                    val newImage = ImageEntity(tripId = 0L, imageKey = imageKey) // 임시 tripId
+                    imageList.add(imageList.size - 1, newImage)
+                    adapter.notifyItemInserted(imageList.size - 2)
                 }
             }
         }

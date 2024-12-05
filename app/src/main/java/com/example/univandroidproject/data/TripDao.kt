@@ -52,5 +52,8 @@ interface TripDao {
     @Query("SELECT * FROM images WHERE tripId = :tripId")
     suspend fun getImagesByTripId(tripId: Long): List<ImageEntity>
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertImages(images: List<ImageEntity>)
+
 
 }
