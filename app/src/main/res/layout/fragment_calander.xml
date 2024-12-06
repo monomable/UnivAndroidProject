@@ -2,27 +2,41 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:gravity="center">
+
+    <com.prolificinteractive.materialcalendarview.MaterialCalendarView
+        android:id="@+id/calendar_view"
+        android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:layout_weight="2"
+        android:padding="10dp"
+        android:layout_marginVertical="10dp"
+        android:theme="@style/CalenderViewCustom"
+        android:background="@drawable/white_tab_round"
+        android:elevation="4dp"
+        app:mcv_dateTextAppearance="@style/CalenderViewDateCustomText"
+        app:mcv_firstDayOfWeek="sunday"
+        app:mcv_leftArrow="@drawable/hero_arrow_back"
+        app:mcv_rightArrow="@drawable/hero_arrow_forward"
+        app:mcv_selectionMode="single"
+        app:mcv_showOtherDates="all"
+        app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
     <TextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="캘린더"
+        android:text="1.1. 월"
         android:textSize="24sp"
-        android:textAlignment="center"/>
+        android:fontFamily="@font/nanum_gothic_bold"
+        android:padding="4dp"/>
 
-    <LinearLayout
+    <androidx.recyclerview.widget.RecyclerView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        android:background="@drawable/pink_tab_round">
+        android:layout_height="match_parent"
+        android:layout_weight="3"/>
 
-        <CalendarView
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_gravity="center_vertical"/>
 
-    </LinearLayout>
 
 </LinearLayout>
