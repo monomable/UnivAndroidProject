@@ -52,13 +52,15 @@ class CalanderFragment : Fragment() {
         // 캘린더 내부에 Trip start Day 색상 변경
         setupCalendar()
 
+        // 현재달에 보이는 이전달 다음달 회색으로 변경
         calendarView.setOnMonthChangedListener { widget, date ->
             calendarView.removeDecorators()
             calendarView.invalidateDecorators()
 
+            setupCalendar()
+
             selectedMonthDecorator = SelectedMonthDecorator(date.month)
             calendarView.addDecorators(selectedMonthDecorator)
-            setupCalendar()
         }
 
         return view
