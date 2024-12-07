@@ -68,6 +68,7 @@ dependencies {
     implementation (libs.androidx.lifecycle.viewmodel.ktx)
     implementation (libs.androidx.lifecycle.livedata.ktx)
     implementation ("com.github.prolificinteractive:material-calendarview:2.0.1")
+    implementation ("com.jakewharton.threetenabp:threetenabp:1.4.4")
 }
 
 secrets {

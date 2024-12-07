@@ -57,5 +57,7 @@ interface TripDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     suspend fun insertImages(images: List<ImageEntity>)
 
+    @Query("SELECT * FROM trip WHERE start_day = :date")
+    suspend fun getTripsByDate(date: String): List<Trip>
 
 }
