@@ -11,7 +11,7 @@ import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripWithImages
 import com.example.univandroidproject.ui.Recycler.HomeImageAdapter
 
-class HomeTripAdapter(private val tripList: List<TripWithImages>) : RecyclerView.Adapter<HomeTripAdapter.ViewHolder>() {
+class HomeTripAdapter(private var tripList: MutableList<TripWithImages>) : RecyclerView.Adapter<HomeTripAdapter.ViewHolder>() {
 
     //private var tripList = emptyList<Trip>()
 
@@ -50,6 +50,7 @@ class HomeTripAdapter(private val tripList: List<TripWithImages>) : RecyclerView
             val context = holder.itemView.context
             val intent = Intent(context, UpdateActivity::class.java).apply {
                 // 데이터를 Intent에 추가
+                putExtra("tripId", trip.id)
                 putExtra("tripTitle", trip.tripTitle)
                 putExtra("tripContents", trip.tripContents)
                 putExtra("tripStartDay", trip.tripStartDay)
@@ -63,10 +64,11 @@ class HomeTripAdapter(private val tripList: List<TripWithImages>) : RecyclerView
     override fun getItemCount(): Int = tripList.size
 
 
-    /*fun setData(trip:List<Trip>){
-        this.tripList = trip
+    fun setData(newTripList: List<TripWithImages>) {
+        tripList.clear()
+        tripList.addAll(newTripList)
         notifyDataSetChanged()
-    }*/
+    }
 
 
 }

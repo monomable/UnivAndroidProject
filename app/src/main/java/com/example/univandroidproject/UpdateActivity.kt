@@ -1,6 +1,7 @@
 package com.example.univandroidproject
 
 import android.os.Bundle
+import android.util.Log
 import android.widget.TextView
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -23,7 +24,7 @@ class UpdateActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_detail)
 
-        val tripId = intent.getLongExtra("tripId", -1L)
+        //val tripId = intent.getLongExtra("tripId", -1L)
         val tripTitle = intent.getStringExtra("tripTitle")
         val tripContents = intent.getStringExtra("tripContents")
         val tripStartDay = intent.getStringExtra("tripStartDay")
@@ -36,29 +37,32 @@ class UpdateActivity : AppCompatActivity() {
         findViewById<TextView>(R.id.update_startday_Button).text = tripStartDay ?: ""
         findViewById<TextView>(R.id.update_endday_Button).text = tripEndDay ?: ""
 
-        // DB 초기화
-        database = TripRoomDatabase.getDatabase(this)
-
-        // RecyclerView 셋업
+        // RecyclerView 설정
         val recyclerView = findViewById<RecyclerView>(R.id.update_img_board)
-        imageAdapter = UpdateImageAdapter(imageList)
+        imageAdapter = UpdateImageAdapter(imageList, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = imageAdapter
 
+        // 전달받은 tripId 확인
+        val tripId = intent.getLongExtra("tripId", -1L)
         if (tripId != -1L) {
-            loadImages(tripId)
+            loadImagesForTrip(tripId)
         }
     }
 
-    private fun loadImages(tripId: Long) {
-        lifecycleScope.launch(Dispatchers.IO) {
-            val tripDao = database.tripDao()
-            val images = tripDao.getImagesByTripId(tripId)
-            withContext(Dispatchers.Main) {
-                imageList.clear()
-                imageList.addAll(images)
-                imageAdapter.notifyDataSetChanged()
+    private fun loadImagesForTrip(tripId: Long) {
+        lifecycleScope.launchWhenStarted {
+            val db = TripRoomDatabase.getDatabase(this@UpdateActivity)
+            val images = withContext(Dispatchers.IO) {
+                db.tripDao().getImagesByTripId(tripId) // tripId와 일치하는 이미지 가져오기
             }
+            updateImageList(images)
         }
+    }
+
+    private fun updateImageList(images: List<ImageEntity>) {
+        imageList.clear()
+        imageList.addAll(images)
+        imageAdapter.notifyDataSetChanged()
     }
 }

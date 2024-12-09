@@ -9,30 +9,38 @@ import android.widget.ImageView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
 import com.example.univandroidproject.data.ImageEntity
-import com.example.univandroidproject.data.TripRoomDatabase
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.runBlocking
-import kotlinx.coroutines.withContext
+import java.io.File
 
 class UpdateImageAdapter(
-    private val imageList: List<ImageEntity>
+    private val imageList: List<ImageEntity>, // 데이터베이스에서 가져온 ImageEntity 목록
+    private val context: Context // 로컬 저장소 접근을 위한 Context
 ) : RecyclerView.Adapter<UpdateImageAdapter.ImageViewHolder>() {
 
-    inner class ImageViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView){
-        val imageView: ImageView = itemView.findViewById(R.id.imageView)
+    class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
+        val imageView: ImageView = view.findViewById(R.id.imageView)
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ImageViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_image, parent, false)
+        val view = LayoutInflater.from(parent.context)
+            .inflate(R.layout.item_image, parent, false)
         return ImageViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: ImageViewHolder, position: Int) {
         val imageEntity = imageList[position]
-        val directory = holder.itemView.context.filesDir
-        val filePath = "$directory/${imageEntity.imageKey}.png"
-        val bitmap = BitmapFactory.decodeFile(filePath)
-        holder.imageView.setImageBitmap(bitmap)
+        val imageKey = imageEntity.imageKey
+        val directory = context.filesDir
+        val filePath = "$directory/$imageKey.png"
+
+        val file = File(filePath)
+        if (file.exists()) {
+            // 로컬 파일에서 Bitmap을 로드하고 ImageView에 표시
+            val bitmap = BitmapFactory.decodeFile(filePath)
+            holder.imageView.setImageBitmap(bitmap)
+        } else {
+            // 파일이 없을 경우 오류 이미지 표시
+            holder.imageView.setImageResource(R.drawable.baseline_settings_24)
+        }
     }
 
     override fun getItemCount(): Int = imageList.size

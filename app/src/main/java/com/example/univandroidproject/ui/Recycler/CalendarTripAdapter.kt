@@ -32,10 +32,12 @@ class CalendarTripAdapter(private var trips: List<Trip>) : RecyclerView.Adapter<
             val context = holder.itemView.context
             val intent = Intent(context, UpdateActivity::class.java).apply {
                 // 데이터를 Intent에 추가
+                putExtra("tripId", trip.id)
                 putExtra("tripTitle", trip.tripTitle)
                 putExtra("tripContents", trip.tripContents)
                 putExtra("tripStartDay", trip.tripStartDay)
                 putExtra("tripEndDay", trip.tripEndDay)
+                putExtra("tripTag", trip.tripTag)
             }
             context.startActivity(intent)
         }
