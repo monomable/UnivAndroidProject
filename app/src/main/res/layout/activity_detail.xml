@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context=".AddActivity">
+
+    <Button
+        android:id="@+id/updateSaveButton"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="right"
+        android:layout_margin="10dp"
+        android:text="수정하기" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:background="@drawable/blue_round_line"
+        android:layout_gravity="center"
+        android:paddingHorizontal="35dp"
+        android:gravity="center">
+
+        <TextView
+            android:id="@+id/update_startday_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="날짜 입력"
+            android:textSize="20sp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:textAlignment="center" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="~"
+            android:paddingHorizontal="10dp"
+            android:textSize="30sp"/>
+
+        <TextView
+            android:id="@+id/update_endday_Button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="날짜 입력"
+            android:textSize="20sp"
+            android:paddingHorizontal="30dp"
+            android:paddingVertical="5dp"
+            android:textAlignment="center" />
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:orientation="vertical"
+        android:background="@drawable/blue_tab_round">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:id="@+id/updateTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textSize="24dp"
+                android:padding="10dp"
+                android:layout_marginRight="10dp"
+                android:gravity="center"
+                android:hint="제목을 입력해주세요"/>
+
+        </LinearLayout>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/update_img_board"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager">
+            <!--tools:listitem="@layout/img_item_horizontal"-->
+
+            <!--<ImageView
+                android:id="@+id/imageView"
+                android:layout_width="150dp"
+                android:layout_height="150dp"
+                app:srcCompat="@android:drawable/ic_input_add"
+                tools:layout_editor_absoluteX="16dp"
+                tools:layout_editor_absoluteY="16dp" /> -->
+
+
+        </androidx.recyclerview.widget.RecyclerView>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:background="@drawable/blue_tab_round"
+        android:layout_weight="0.2">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:padding="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_gravity="left|center"
+            android:text="태그 :"/>
+
+        <TextView
+            android:id="@+id/updateTag"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="24dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:layout_gravity="center"
+            android:hint="#태그, #입력"/>
+
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_weight="1"
+        android:background="@drawable/blue_tab_round">
+
+        <TextView
+            android:id="@+id/updateContents"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30dp"
+            android:padding="10dp"
+            android:layout_marginRight="10dp"
+            android:hint="내용을 입력해주세요"/>
+
+    </LinearLayout>
+
+</LinearLayout>

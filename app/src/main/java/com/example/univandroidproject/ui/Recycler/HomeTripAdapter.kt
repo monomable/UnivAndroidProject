@@ -54,6 +54,7 @@ class HomeTripAdapter(private val tripList: List<TripWithImages>) : RecyclerView
                 putExtra("tripContents", trip.tripContents)
                 putExtra("tripStartDay", trip.tripStartDay)
                 putExtra("tripEndDay", trip.tripEndDay)
+                putExtra("tripTag", trip.tripTag)
             }
             context.startActivity(intent)
         }
