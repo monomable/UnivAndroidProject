@@ -60,4 +60,7 @@ interface TripDao {
     @Query("SELECT * FROM trip WHERE start_day = :date")
     suspend fun getTripsByDate(date: String): List<Trip>
 
+    @Query("SELECT * FROM trip WHERE title LIKE '%' || :searchWord || '%'")
+    suspend fun searchTrips(searchWord: String): List<Trip>
+
 }

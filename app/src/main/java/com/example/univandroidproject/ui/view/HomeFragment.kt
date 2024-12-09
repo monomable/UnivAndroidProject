@@ -7,6 +7,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Button
+import android.widget.EditText
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
 import androidx.lifecycle.lifecycleScope
@@ -41,6 +42,9 @@ class HomeFragment: Fragment(), View.OnClickListener {
         val btn: Button = view.findViewById(R.id.addButton)
         btn.setOnClickListener(this)
 
+        val searchButton = view.findViewById<Button>(R.id.home_search_button)
+        val searchText = view.findViewById<EditText>(R.id.search_text)
+
         // RecyclerView 초기화
         recyclerView = view.findViewById(R.id.tripRecyclerView)
         tripAdapter = HomeTripAdapter(tripList)
@@ -53,6 +57,11 @@ class HomeFragment: Fragment(), View.OnClickListener {
 
         // 데이터 로드
         loadTripsAndImages()
+
+        searchButton.setOnClickListener {
+            val keyword = searchText.text.toString().trim()
+            searchTripsAndImages(keyword)
+        }
 
         return view
     }
@@ -80,6 +89,28 @@ class HomeFragment: Fragment(), View.OnClickListener {
             }
 
             tripAdapter.notifyDataSetChanged()
+        }
+    }
+
+    private fun searchTripsAndImages(keyword: String) {
+        lifecycleScope.launch(Dispatchers.IO) {
+            val trips = if (keyword.isBlank()) {
+                tripDao.getAllTrips()
+            } else {
+                tripDao.searchTrips(keyword)
+            }
+
+            val searchedTripsWithImages = mutableListOf<TripWithImages>()
+            for (trip in trips) {
+                val images = tripDao.getImagesByTripId(trip.id.toLong())
+                searchedTripsWithImages.add(TripWithImages(trip, images))
+            }
+
+            withContext(Dispatchers.Main) {
+                tripList.clear()
+                tripList.addAll(searchedTripsWithImages)
+                tripAdapter.notifyDataSetChanged()
+            }
         }
     }
 }
