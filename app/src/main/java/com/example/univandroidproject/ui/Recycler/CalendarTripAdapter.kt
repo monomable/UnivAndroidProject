@@ -16,18 +16,22 @@ class CalendarTripAdapter(private var trips: List<Trip>) : RecyclerView.Adapter<
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): TripViewHolder {
-        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_trip, parent, false)
+        val view = LayoutInflater.from(parent.context).inflate(R.layout.item_calendar_trip, parent, false)
         return TripViewHolder(view)
     }
 
     override fun onBindViewHolder(holder: TripViewHolder, position: Int) {
         val trip = trips[position]
         holder.title.text = trip.tripTitle
+        holder.startday.text = trip.tripStartDay
+        holder.endday.text = trip.tripEndDay
     }
 
     override fun getItemCount(): Int = trips.size
 
     class TripViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         val title: TextView = itemView.findViewById(R.id.tripTitle)
+        val startday: TextView = itemView.findViewById(R.id.item_start_date)
+        val endday: TextView = itemView.findViewById(R.id.item_end_date)
     }
 }
