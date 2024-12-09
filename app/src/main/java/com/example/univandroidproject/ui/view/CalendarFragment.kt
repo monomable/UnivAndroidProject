@@ -63,6 +63,8 @@ class CalendarFragment : Fragment() {
         setupCalendar()
         setupRecyclerView()
 
+        selectToday()
+
         // 현재달에 보이는 이전달 다음달 회색으로 변경
         calendarView.setOnMonthChangedListener { widget, date ->
             calendarView.removeDecorators()
@@ -132,6 +134,20 @@ class CalendarFragment : Fragment() {
 
     private fun updateRecyclerView(trips: List<Trip>) {
         tripAdapter.updateTrips(trips)
+    }
+
+    private fun selectToday() {
+        val today = LocalDate.now()
+        val todayCalendarDay = CalendarDay.from(today.year, today.monthValue, today.dayOfMonth)
+
+        // 캘린더에서 오늘 날짜를 선택
+        calendarView.setSelectedDate(todayCalendarDay)
+
+        // 오늘 날짜를 TextView에 표시
+        selectedDateText.text = displayDateFormatter.format(today)
+
+        // 오늘 날짜에 해당하는 여행 정보 로드
+        fetchTripsForDate(dateFormatter.format(today))
     }
     /*
     private inner class  ChangeMonthDecorator() {
