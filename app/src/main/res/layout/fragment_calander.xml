@@ -25,6 +25,7 @@
         app:mcv_weekDayTextAppearance="@style/CalenderViewWeekCustomText" />
 
     <TextView
+        android:id="@+id/select_date"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="1.1. 월"
@@ -33,6 +34,7 @@
         android:padding="4dp"/>
 
     <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/calendar_recyclerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:layout_weight="3"/>

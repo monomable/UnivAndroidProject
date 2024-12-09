@@ -5,11 +5,16 @@ import android.text.style.ForegroundColorSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.TextView
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.lifecycleScope
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
+import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripRoomDatabase
+import com.example.univandroidproject.ui.Recycler.CalendarTripAdapter
 import com.example.univandroidproject.ui.calendar.TripDecorator
 import com.prolificinteractive.materialcalendarview.CalendarDay
 import com.prolificinteractive.materialcalendarview.DayViewDecorator
@@ -20,16 +25,19 @@ import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import org.threeten.bp.LocalDate
 import org.threeten.bp.format.DateTimeFormatter
-import java.text.SimpleDateFormat
 import java.util.Locale
 
-class CalanderFragment : Fragment() {
+class CalendarFragment : Fragment() {
 
     private lateinit var calendarView: MaterialCalendarView
     private lateinit var database: TripRoomDatabase
+    private lateinit var recyclerView: RecyclerView
+    private lateinit var tripAdapter: CalendarTripAdapter
+    private lateinit var selectedDateText: TextView
 
     // 날짜 포맷 설정 ("yy-MM-dd")
     private val dateFormatter = DateTimeFormatter.ofPattern("yy/MM/dd")
+    private val displayDateFormatter = DateTimeFormatter.ofPattern("MMMM dd, yyyy", Locale.getDefault())
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -38,6 +46,8 @@ class CalanderFragment : Fragment() {
     ): View? {
         val view = inflater.inflate(R.layout.fragment_calander, container, false)
         calendarView = view.findViewById(R.id.calendar_view)
+        recyclerView = view.findViewById(R.id.calendar_recyclerview)
+        selectedDateText = view.findViewById(R.id.select_date)
 
         var selectedMonthDecorator = SelectedMonthDecorator(CalendarDay.today().month)
 
@@ -51,6 +61,7 @@ class CalanderFragment : Fragment() {
 
         // 캘린더 내부에 Trip start Day 색상 변경
         setupCalendar()
+        setupRecyclerView()
 
         // 현재달에 보이는 이전달 다음달 회색으로 변경
         calendarView.setOnMonthChangedListener { widget, date ->
@@ -82,6 +93,23 @@ class CalanderFragment : Fragment() {
             // 강조 표시된 날짜를 캘린더에 추가
             calendarView.addDecorators(TripDecorator(highlightedDays))
         }
+
+        calendarView.setOnDateChangedListener { _, date, _ ->
+            val selectedDate = LocalDate.of(date.year, date.month, date.day)
+            val formattedDate = dateFormatter.format(selectedDate)
+
+            // Update the selected date TextView
+            selectedDateText.text = displayDateFormatter.format(selectedDate)
+
+            // Fetch trips for the selected date
+            fetchTripsForDate(formattedDate)
+        }
+    }
+
+    private fun setupRecyclerView() {
+        tripAdapter = CalendarTripAdapter(emptyList())
+        recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        recyclerView.adapter = tripAdapter
     }
 
     private inner class SelectedMonthDecorator(val selectedMonth : Int) : DayViewDecorator {
@@ -93,6 +121,18 @@ class CalanderFragment : Fragment() {
         }
     }
 
+    private fun fetchTripsForDate(date: String) {
+        lifecycleScope.launch {
+            val trips = withContext(Dispatchers.IO) {
+                database.tripDao().getTripsByDate(date)
+            }
+            updateRecyclerView(trips)
+        }
+    }
+
+    private fun updateRecyclerView(trips: List<Trip>) {
+        tripAdapter.updateTrips(trips)
+    }
     /*
     private inner class  ChangeMonthDecorator() {
         calendarView

@@ -1,19 +1,12 @@
 package com.example.univandroidproject
 
-import android.content.Intent
 import android.os.Bundle
-import android.widget.Button
-import android.widget.Toast
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.example.univandroidproject.databinding.ActivityMainBinding
-import com.example.univandroidproject.ui.view.CalanderFragment
+import com.example.univandroidproject.ui.view.CalendarFragment
 import com.example.univandroidproject.ui.view.FavoriteFragment
 import com.example.univandroidproject.ui.view.HomeFragment
 import com.example.univandroidproject.ui.view.MapFragment
-import com.example.univandroidproject.ui.view.SearchFragment
 
 class MainActivity : AppCompatActivity() {
 
@@ -42,7 +35,7 @@ class MainActivity : AppCompatActivity() {
                     true
                 }
                 R.id.fragment_calander -> {
-                    supportFragmentManager.beginTransaction().replace(R.id.main_container, CalanderFragment()).commit()
+                    supportFragmentManager.beginTransaction().replace(R.id.main_container, CalendarFragment()).commit()
                     true
                 }
                 R.id.fragment_favorite -> {
