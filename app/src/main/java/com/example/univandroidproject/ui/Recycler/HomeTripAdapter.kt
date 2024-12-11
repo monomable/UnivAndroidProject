@@ -10,6 +10,7 @@ import com.example.univandroidproject.UpdateActivity
 import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripWithImages
 import com.example.univandroidproject.ui.Recycler.HomeImageAdapter
+import com.example.univandroidproject.ui.Recycler.MarginItemDecoration
 
 class HomeTripAdapter(private var tripList: MutableList<TripWithImages>) : RecyclerView.Adapter<HomeTripAdapter.ViewHolder>() {
 
@@ -44,6 +45,7 @@ class HomeTripAdapter(private var tripList: MutableList<TripWithImages>) : Recyc
         val imageAdapter = HomeImageAdapter(images)
         holder.imageRecyclerView.layoutManager = LinearLayoutManager(holder.itemView.context, LinearLayoutManager.HORIZONTAL, false)
         holder.imageRecyclerView.adapter = imageAdapter
+        holder.imageRecyclerView.addItemDecoration(MarginItemDecoration(10))
 
 
         holder.itemView.setOnClickListener{

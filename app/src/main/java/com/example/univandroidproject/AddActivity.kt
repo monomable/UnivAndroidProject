@@ -22,6 +22,7 @@ import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripDao
 import com.example.univandroidproject.data.TripRoomDatabase
 import com.example.univandroidproject.databinding.ActivityAddBinding
+import com.example.univandroidproject.ui.Recycler.MarginItemDecoration
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import java.io.File
@@ -73,6 +74,7 @@ class AddActivity : AppCompatActivity() {
 
         binding.imgBoard.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.imgBoard.adapter = adapter
+        binding.imgBoard.addItemDecoration(MarginItemDecoration(20))
 
         loadImagesFromDatabase()
 

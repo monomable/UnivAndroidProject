@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.data.ImageEntity
 import com.example.univandroidproject.data.TripRoomDatabase
+import com.example.univandroidproject.ui.Recycler.MarginItemDecoration
 import com.example.univandroidproject.ui.Recycler.UpdateImageAdapter
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
@@ -42,6 +43,7 @@ class UpdateActivity : AppCompatActivity() {
         imageAdapter = UpdateImageAdapter(imageList, this)
         recyclerView.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         recyclerView.adapter = imageAdapter
+        recyclerView.addItemDecoration(MarginItemDecoration(20))
 
         // 전달받은 tripId 확인
         val tripId = intent.getLongExtra("tripId", -1L)
