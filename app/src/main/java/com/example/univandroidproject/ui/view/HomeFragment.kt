@@ -56,7 +56,7 @@ class HomeFragment: Fragment(), View.OnClickListener {
         tripDao = database.tripDao()
 
         // 데이터 로드
-        loadTripsAndImages()
+        //loadTripsAndImages(true)
 
         searchButton.setOnClickListener {
             val keyword = searchText.text.toString().trim()
@@ -78,10 +78,18 @@ class HomeFragment: Fragment(), View.OnClickListener {
         }
     }
 
-    private fun loadTripsAndImages() {
+    override fun onResume() {
+        super.onResume()
+        // Fragment가 다시 활성화될 때 RecyclerView 새로고침
+        loadTripsAndImages(clearList = true)
+    }
+
+    private fun loadTripsAndImages(clearList: Boolean = false) {
         lifecycleScope.launch {
+            if (clearList) {
+                tripList.clear()
+            }
             val trips = tripDao.getAllTrips()
-            tripList.clear()
 
             for (trip in trips) {
                 val images = tripDao.getImagesByTripId(trip.id.toLong())

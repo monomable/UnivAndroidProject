@@ -2,12 +2,15 @@ package com.example.univandroidproject
 
 import android.os.Bundle
 import android.util.Log
+import android.widget.Button
 import android.widget.TextView
+import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.data.ImageEntity
+import com.example.univandroidproject.data.Trip
 import com.example.univandroidproject.data.TripRoomDatabase
 import com.example.univandroidproject.ui.Recycler.MarginItemDecoration
 import com.example.univandroidproject.ui.Recycler.UpdateImageAdapter
@@ -50,6 +53,26 @@ class UpdateActivity : AppCompatActivity() {
         if (tripId != -1L) {
             loadImagesForTrip(tripId)
         }
+
+        // 삭제 버튼 설정
+        val deleteButton = findViewById<Button>(R.id.deleteButton)
+        deleteButton.setOnClickListener {
+            if (tripId != -1L) {
+                deleteTrip(tripId)
+            } else {
+                Toast.makeText(this, "삭제할 수 없습니다. 잘못된 데이터입니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
+        // 수정 버튼 설정
+        val updateButton = findViewById<Button>(R.id.updateSaveButton)
+        updateButton.setOnClickListener {
+            if (tripId != -1L) {
+                updateTrip(tripId)
+            } else {
+                Toast.makeText(this, "수정할 수 없습니다. 잘못된 데이터입니다.", Toast.LENGTH_SHORT).show()
+            }
+        }
     }
 
     private fun loadImagesForTrip(tripId: Long) {
@@ -66,5 +89,52 @@ class UpdateActivity : AppCompatActivity() {
         imageList.clear()
         imageList.addAll(images)
         imageAdapter.notifyDataSetChanged()
+    }
+
+    private fun deleteTrip(tripId: Long) {
+        lifecycleScope.launch {
+            val db = TripRoomDatabase.getDatabase(this@UpdateActivity)
+            withContext(Dispatchers.IO) {
+                db.tripDao().deleteTripById(tripId) // 특정 Trip 삭제
+                db.tripDao().deleteImagesByTripId(tripId) // Trip과 관련된 이미지 삭제
+            }
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@UpdateActivity, "여행 기록이 삭제되었습니다.", Toast.LENGTH_SHORT).show()
+                setResult(RESULT_OK) // HomeFragment로 결과 전달
+                finish() // Activity 종료
+            }
+        }
+    }
+
+    private fun updateTrip(tripId: Long) {
+        val title = findViewById<TextView>(R.id.updateTitle).text.toString()
+        val contents = findViewById<TextView>(R.id.updateContents).text.toString()
+        val tag = findViewById<TextView>(R.id.updateTag).text.toString()
+        val startDay = findViewById<TextView>(R.id.update_startday_Button).text.toString()
+        val endDay = findViewById<TextView>(R.id.update_endday_Button).text.toString()
+
+        if (title.isEmpty() || startDay.isEmpty() || endDay.isEmpty()) {
+            Toast.makeText(this, "필수 정보를 입력해주세요.", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        lifecycleScope.launch {
+            val db = TripRoomDatabase.getDatabase(this@UpdateActivity)
+            withContext(Dispatchers.IO) {
+                val trip = Trip(
+                    id = tripId,
+                    tripTitle = title,
+                    tripContents = contents,
+                    tripStartDay = startDay,
+                    tripEndDay = endDay,
+                    tripTag = tag
+                )
+                db.tripDao().update(trip)
+            }
+            withContext(Dispatchers.Main) {
+                Toast.makeText(this@UpdateActivity, "여행 정보가 수정되었습니다.", Toast.LENGTH_SHORT).show()
+                finish() // Activity 종료
+            }
+        }
     }
 }

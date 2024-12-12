@@ -60,6 +60,12 @@ interface TripDao {
     @Query("SELECT * FROM trip WHERE start_day = :date")
     suspend fun getTripsByDate(date: String): List<Trip>
 
+    @Query("DELETE FROM trip WHERE id = :tripId")
+    suspend fun deleteTripById(tripId: Long)
+
+    @Query("DELETE FROM images WHERE tripId = :tripId")
+    suspend fun deleteImagesByTripId(tripId: Long)
+
     @Query("SELECT * FROM trip WHERE title LIKE '%' || :searchWord || '%'")
     suspend fun searchTrips(searchWord: String): List<Trip>
 
