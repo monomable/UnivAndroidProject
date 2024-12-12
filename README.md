@@ -5,8 +5,9 @@
 secrets.properties          // 구글맵 API 파일  </br>
 local.defaults.properties   // API 키 연동 파일
 
-[secrets.properties] 예제
+### 파일 예시
+[secrets.properties] <br/>
 MAPS_API_KEY=your_google_map_api_key
 
-[local.defaults.properties]
+[local.defaults.properties] <br/>
 MAPS_API_KEY=DEFAULT_API_KEY
