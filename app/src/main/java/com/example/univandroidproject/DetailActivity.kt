@@ -1,10 +1,12 @@
 package com.example.univandroidproject
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -69,7 +71,8 @@ class DetailActivity : AppCompatActivity() {
             val intent = Intent(this, UpdateActivity::class.java).apply {
                 putExtra("TRIP_ID", tripId) // Pass the tripId to UpdateActivity
             }
-            startActivity(intent)
+            //startActivity(intent)
+            updateActivityLauncher.launch(intent)
         }
     }
 
@@ -103,6 +106,38 @@ class DetailActivity : AppCompatActivity() {
             }
         }
     }
+
+    private val updateActivityLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == Activity.RESULT_OK) {
+            val tripId = intent.getLongExtra("tripId", -1L)
+            if (tripId != -1L) {
+                loadImagesForTrip(tripId) // 이미지를 새로고침
+                reloadTripDetails() // Trip의 세부정보를 새로고침
+            }
+        }
+    }
+
+    private fun reloadTripDetails() {
+        val tripId = intent.getLongExtra("tripId", -1L)
+        if (tripId != -1L) {
+            lifecycleScope.launch {
+                val db = TripRoomDatabase.getDatabase(this@DetailActivity)
+                val trip = withContext(Dispatchers.IO) {
+                    db.tripDao().getTripById(tripId) // Trip 정보를 DB에서 새로 가져옴
+                }
+                withContext(Dispatchers.Main) {
+                    trip?.let {
+                        findViewById<TextView>(R.id.updateTitle).text = it.tripTitle
+                        findViewById<TextView>(R.id.updateContents).text = it.tripContents
+                        findViewById<TextView>(R.id.updateTag).text = it.tripTag
+                        findViewById<TextView>(R.id.update_startday_Button).text = it.tripStartDay
+                        findViewById<TextView>(R.id.update_endday_Button).text = it.tripEndDay
+                    }
+                }
+            }
+        }
+    }
+
 
     /*
     private fun updateTrip(tripId: Long) {

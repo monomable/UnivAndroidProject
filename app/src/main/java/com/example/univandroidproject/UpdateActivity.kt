@@ -1,10 +1,13 @@
 package com.example.univandroidproject
 
 import ImageAdapter
+import android.app.DatePickerDialog
 import android.content.Intent
 import android.graphics.Bitmap
+import android.icu.util.Calendar
 import android.os.Bundle
 import android.provider.MediaStore
+import android.widget.Button
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
@@ -20,6 +23,8 @@ import kotlinx.coroutines.launch
 import java.io.File
 import java.io.FileOutputStream
 import java.io.IOException
+import java.text.SimpleDateFormat
+import java.util.Locale
 import java.util.UUID
 
 class UpdateActivity : AppCompatActivity() {
@@ -28,6 +33,11 @@ class UpdateActivity : AppCompatActivity() {
     private lateinit var tripDao: TripDao
     private lateinit var imageAdapter: ImageAdapter
     private val imageList = mutableListOf<ImageEntity?>()
+
+    lateinit var startDaybutton : Button
+    lateinit var endDaybutton : Button
+
+    private val calendar = Calendar.getInstance()
 
     private var tripId: Long = -1L
 
@@ -62,6 +72,17 @@ class UpdateActivity : AppCompatActivity() {
         // Set update button click listener
         binding.saveButton.setOnClickListener {
             updateTripData()
+        }
+
+        startDaybutton = findViewById<Button>(R.id.startday_Button)
+        endDaybutton = findViewById<Button>(R.id.endday_Button)
+
+        startDaybutton.setOnClickListener{
+            showDatePicker(startDaybutton)
+        }
+
+        endDaybutton.setOnClickListener{
+            showDatePicker(endDaybutton)
         }
     }
 
@@ -119,6 +140,7 @@ class UpdateActivity : AppCompatActivity() {
             tripDao.insertImages(updatedImages)
 
             runOnUiThread {
+                setResult(RESULT_OK)
                 Toast.makeText(this@UpdateActivity, "여행이 업데이트 되었습니다", Toast.LENGTH_SHORT).show()
                 finish()
             }
@@ -197,6 +219,21 @@ class UpdateActivity : AppCompatActivity() {
         } else {
             false
         }
+    }
+
+    private fun showDatePicker(button: Button) {
+        val datePickerDialog = DatePickerDialog(this, {DatePicker, year: Int, monthOfYear: Int, dayOfMonth: Int ->
+            val selectedDate = Calendar.getInstance()
+            selectedDate.set(year, monthOfYear, dayOfMonth)
+            val dateFormat = SimpleDateFormat("yy/MM/dd", Locale.getDefault())
+            val foramattedDate = dateFormat.format(selectedDate.time)
+            button.text = foramattedDate
+        },
+            calendar.get(Calendar.YEAR),
+            calendar.get(Calendar.MONTH),
+            calendar.get(Calendar.DAY_OF_MONTH)
+        )
+        datePickerDialog.show()
     }
 }
 
