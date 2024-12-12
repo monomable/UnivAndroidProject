@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
-import com.example.univandroidproject.UpdateActivity
+import com.example.univandroidproject.DetailActivity
 import com.example.univandroidproject.data.Trip
 
 class CalendarTripAdapter(private var trips: List<Trip>) : RecyclerView.Adapter<CalendarTripAdapter.TripViewHolder>() {
@@ -30,7 +30,7 @@ class CalendarTripAdapter(private var trips: List<Trip>) : RecyclerView.Adapter<
 
         holder.itemView.setOnClickListener{ //HomeTripAdapter 와 동일한 클릭 리스너
             val context = holder.itemView.context
-            val intent = Intent(context, UpdateActivity::class.java).apply {
+            val intent = Intent(context, DetailActivity::class.java).apply {
                 // 데이터를 Intent에 추가
                 putExtra("tripId", trip.id)
                 putExtra("tripTitle", trip.tripTitle)

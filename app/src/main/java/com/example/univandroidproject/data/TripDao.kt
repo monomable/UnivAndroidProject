@@ -19,7 +19,7 @@ interface TripDao {
     fun readAllData(): LiveData<List<Trip>>
 
     @Query("SELECT * from trip WHERE id = :id")
-    fun getItem(id: Int): Flow<Trip>
+    fun getItem(id: Long): Flow<Trip>
 
     @Query("SELECT * FROM Trip")
     suspend fun getAll(): List<Trip>

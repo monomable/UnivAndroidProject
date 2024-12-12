@@ -11,10 +11,10 @@ import com.example.univandroidproject.R
 import com.example.univandroidproject.data.ImageEntity
 import java.io.File
 
-class UpdateImageAdapter(
+class DetailImageAdapter(
     private val imageList: List<ImageEntity>, // 데이터베이스에서 가져온 ImageEntity 목록
     private val context: Context // 로컬 저장소 접근을 위한 Context
-) : RecyclerView.Adapter<UpdateImageAdapter.ImageViewHolder>() {
+) : RecyclerView.Adapter<DetailImageAdapter.ImageViewHolder>() {
 
     class ImageViewHolder(view: View) : RecyclerView.ViewHolder(view) {
         val imageView: ImageView = view.findViewById(R.id.imageView)

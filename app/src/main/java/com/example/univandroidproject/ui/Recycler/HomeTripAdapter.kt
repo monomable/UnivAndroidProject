@@ -6,8 +6,7 @@ import android.widget.TextView
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.univandroidproject.R
-import com.example.univandroidproject.UpdateActivity
-import com.example.univandroidproject.data.Trip
+import com.example.univandroidproject.DetailActivity
 import com.example.univandroidproject.data.TripWithImages
 import com.example.univandroidproject.ui.Recycler.HomeImageAdapter
 import com.example.univandroidproject.ui.Recycler.MarginItemDecoration
@@ -50,7 +49,7 @@ class HomeTripAdapter(private var tripList: MutableList<TripWithImages>) : Recyc
 
         holder.itemView.setOnClickListener{
             val context = holder.itemView.context
-            val intent = Intent(context, UpdateActivity::class.java).apply {
+            val intent = Intent(context, DetailActivity::class.java).apply {
                 // 데이터를 Intent에 추가
                 putExtra("tripId", trip.id)
                 putExtra("tripTitle", trip.tripTitle)
